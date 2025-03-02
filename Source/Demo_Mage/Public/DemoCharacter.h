@@ -26,12 +26,6 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Camera")
-	TObjectPtr<UCameraComponent> CameraComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
-	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
-
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -45,6 +39,7 @@ public:
 	virtual bool GetIsInAir() override;
 	virtual bool GetIsBasicAttacking() override;
 
+protected:
 	UFUNCTION()
 	void MoveInputCallback(const FInputActionValue& Value);
 
@@ -57,7 +52,21 @@ public:
 	UFUNCTION()
 	void CameraMovementInputCallback(const FInputActionValue& Value);
 
+	// ------------------- Demo Character ------------------- //
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
+	TObjectPtr<UCameraComponent> CameraComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
+	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
+	float WalkSpeed = 250.f;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
+	float SprintSpeed = 600.f;
+
+
+	// ------------------- Enhanced Input ------------------- //
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputMappingContext> InputMappingContext;
 

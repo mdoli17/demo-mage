@@ -23,6 +23,8 @@ ADemoCharacter::ADemoCharacter()
 	SkeletalMeshComponent->SetupAttachment(CameraComponent);
 
 	CameraComponent->bUsePawnControlRotation = true;
+
+	GetCharacterMovement()->MaxWalkSpeed = WalkSpeed;
 }
 
 // Called when the game starts or when spawned
@@ -62,7 +64,7 @@ bool ADemoCharacter::GetIsMoving()
 
 bool ADemoCharacter::GetIsSprinting()
 {
-	return false;
+	return GetCharacterMovement()->MaxWalkSpeed > WalkSpeed; // TODO: Refactor this after implementing blend space for movement speed.
 }
 
 bool ADemoCharacter::GetIsInAir()
@@ -91,10 +93,14 @@ void ADemoCharacter::MoveInputCallback(const FInputActionValue& Value)
 
 void ADemoCharacter::SprintInputCallback(const FInputActionValue& Value)
 {
+	const bool ShouldSprint = Value.Get<bool>();
+
+	GetCharacterMovement()->MaxWalkSpeed = ShouldSprint ? SprintSpeed : WalkSpeed;
 }
 
 void ADemoCharacter::JumpInputCallback(const FInputActionValue& Value)
 {
+	Jump();
 }
 
 void ADemoCharacter::CameraMovementInputCallback(const FInputActionValue& Value)

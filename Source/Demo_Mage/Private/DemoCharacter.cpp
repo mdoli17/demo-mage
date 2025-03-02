@@ -4,6 +4,10 @@
 #include "Demo_Mage/Public/DemoCharacter.h"
 
 #include "GameFramework/CharacterMovementComponent.h"
+#include "InputMappingContext.h"
+#include "EnhancedInputSubsystems.h"
+#include "EnhancedInputComponent.h"
+#include "InputAction.h"
 
 
 // Sets default values
@@ -11,6 +15,14 @@ ADemoCharacter::ADemoCharacter()
 {
 	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
+
+	CameraComponent->SetupAttachment(RootComponent);
+	SkeletalMeshComponent->SetupAttachment(CameraComponent);
+
+	CameraComponent->bUsePawnControlRotation = true;
 }
 
 // Called when the game starts or when spawned
@@ -29,6 +41,18 @@ void ADemoCharacter::Tick(float DeltaTime)
 void ADemoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	const APlayerController* PlayerController = Cast<APlayerController>(GetController());
+	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+
+	Subsystem->ClearAllMappings();
+	Subsystem->AddMappingContext(InputMappingContext.LoadSynchronous(), 0);
+
+	UEnhancedInputComponent* EnhancedInputComponent = Cast<UEnhancedInputComponent>(PlayerInputComponent);
+	EnhancedInputComponent->BindAction(MoveAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::MoveInputCallback);
+	EnhancedInputComponent->BindAction(SprintAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::SprintInputCallback);
+	EnhancedInputComponent->BindAction(JumpAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::JumpInputCallback);
+	EnhancedInputComponent->BindAction(CameraMovementAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::CameraMovementInputCallback);
 }
 
 bool ADemoCharacter::GetIsMoving()
@@ -49,4 +73,40 @@ bool ADemoCharacter::GetIsInAir()
 bool ADemoCharacter::GetIsBasicAttacking()
 {
 	return false;
+}
+
+void ADemoCharacter::MoveInputCallback(const FInputActionValue& Value)
+{
+	const FVector2D Direction = Value.Get<FVector2D>();
+	if (Direction.X != 0)
+	{
+		AddMovementInput(GetActorForwardVector() * Direction.X);
+	}
+
+	if (Direction.Y != 0)
+	{
+		AddMovementInput(GetActorRightVector() * Direction.Y);
+	}
+}
+
+void ADemoCharacter::SprintInputCallback(const FInputActionValue& Value)
+{
+}
+
+void ADemoCharacter::JumpInputCallback(const FInputActionValue& Value)
+{
+}
+
+void ADemoCharacter::CameraMovementInputCallback(const FInputActionValue& Value)
+{
+	const FVector2D CameraValue = Value.Get<FVector2D>();
+	if (CameraValue == FVector2D::Zero()) return;
+
+	APlayerController* PlayerController = Cast<APlayerController>(GetController());
+
+	if (CameraValue.Y != 0)
+		PlayerController->AddPitchInput(-CameraValue.Y);
+
+	if (CameraValue.X != 0)
+		PlayerController->AddYawInput(CameraValue.X);
 }

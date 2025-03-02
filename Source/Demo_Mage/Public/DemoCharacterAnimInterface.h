@@ -24,7 +24,7 @@ class DEMO_MAGE_API IDemoCharacterAnimInterface
 public:
 	virtual bool GetIsMoving() = 0;
 	virtual bool GetIsSprinting() = 0;
-	virtual bool GetIsJumping() = 0;
+	virtual bool GetIsInAir() = 0;
 
 	virtual bool GetIsBasicAttacking() = 0;
 

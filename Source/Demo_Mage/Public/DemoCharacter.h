@@ -3,12 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DemoCharacterAnimInterface.h"
 #include "GameFramework/Character.h"
 #include "DemoCharacter.generated.h"
 
 UCLASS()
-class DEMO_MAGE_API ADemoCharacter : public ACharacter
+class DEMO_MAGE_API ADemoCharacter : public ACharacter, public IDemoCharacterAnimInterface
 {
+private:
 	GENERATED_BODY()
 
 public:
@@ -25,4 +27,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	// Animation Interface
+	virtual bool GetIsMoving() override;
+	virtual bool GetIsSprinting() override;
+	virtual bool GetIsInAir() override;
+	virtual bool GetIsBasicAttacking() override;
 };

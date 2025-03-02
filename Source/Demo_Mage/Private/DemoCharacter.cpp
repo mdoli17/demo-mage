@@ -3,6 +3,8 @@
 
 #include "Demo_Mage/Public/DemoCharacter.h"
 
+#include "GameFramework/CharacterMovementComponent.h"
+
 
 // Sets default values
 ADemoCharacter::ADemoCharacter()
@@ -15,7 +17,6 @@ ADemoCharacter::ADemoCharacter()
 void ADemoCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
 }
 
 // Called every frame
@@ -30,3 +31,22 @@ void ADemoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 }
 
+bool ADemoCharacter::GetIsMoving()
+{
+	return GetVelocity().Length() > 0;
+}
+
+bool ADemoCharacter::GetIsSprinting()
+{
+	return false;
+}
+
+bool ADemoCharacter::GetIsInAir()
+{
+	return GetMovementComponent()->IsFalling();
+}
+
+bool ADemoCharacter::GetIsBasicAttacking()
+{
+	return false;
+}

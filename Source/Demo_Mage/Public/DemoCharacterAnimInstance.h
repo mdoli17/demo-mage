@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DemoCharacterAnimInterface.h"
 #include "Animation/AnimInstance.h"
 #include "DemoCharacterAnimInstance.generated.h"
 
@@ -15,6 +16,11 @@ class DEMO_MAGE_API UDemoCharacterAnimInstance : public UAnimInstance
 	GENERATED_BODY()
 
 protected:
+	virtual void NativeInitializeAnimation() override;
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	IDemoCharacterAnimInterface* CharacterInterface = nullptr;
+
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Locomotion")
 	bool bIsMoving;
 
@@ -22,5 +28,5 @@ protected:
 	bool bIsSprinting;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Locomotion")
-	bool bIsJumping;
+	bool bIsInAir;
 };

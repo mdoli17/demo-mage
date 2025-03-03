@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "DemoCharacterAnimInterface.h"
+#include "DemoCharacterToAnimInterface.h"
 #include "Animation/AnimInstance.h"
 #include "DemoCharacterAnimInstance.generated.h"
 
@@ -11,13 +12,23 @@
  * 
  */
 UCLASS()
-class DEMO_MAGE_API UDemoCharacterAnimInstance : public UAnimInstance
+class DEMO_MAGE_API UDemoCharacterAnimInstance : public UAnimInstance, public IDemoCharacterToAnimInterface
 {
 	GENERATED_BODY()
 
 protected:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+	virtual void StartBasicAttack() override
+	{
+		bIsAttacking = true;
+	}
+
+	virtual void StopBasicAttack() override
+	{
+		bIsAttacking = false;
+	}
 
 	IDemoCharacterAnimInterface* CharacterInterface = nullptr;
 

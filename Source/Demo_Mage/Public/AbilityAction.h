@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ActionParams.h"
+#include "DemoCharacter.h"
 #include "GameplayTagContainer.h"
 #include "UObject/Object.h"
 #include "AbilityAction.generated.h"
@@ -64,6 +65,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Action", meta=(AllowPrivateAccess))
 	AActor* Owner;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Action", meta=(AllowPrivateAccess))
+	ADemoCharacter* DemoCharacter;
 
 	bool bIsRunning;
 };

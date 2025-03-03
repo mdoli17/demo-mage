@@ -74,11 +74,6 @@ bool ADemoCharacter::GetIsInAir()
 	return GetMovementComponent()->IsFalling();
 }
 
-bool ADemoCharacter::GetIsBasicAttacking()
-{
-	return AbilityComponent->IsActionRunning(TEXT("Basic Attack")); // TODO: Refactor hard-coded names.
-}
-
 void ADemoCharacter::MoveInputCallback(const FInputActionValue& Value)
 {
 	const FVector2D Direction = Value.Get<FVector2D>();

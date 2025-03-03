@@ -4,11 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "DemoCharacterAnimInterface.generated.h"
+#include "DemoCharacterToAnimInterface.generated.h"
 
 // This class does not need to be modified.
-UINTERFACE()
-class UDemoCharacterAnimInterface : public UInterface
+UINTERFACE(NotBlueprintable)
+class UDemoCharacterToAnimInterface : public UInterface
 {
 	GENERATED_BODY()
 };
@@ -16,13 +16,15 @@ class UDemoCharacterAnimInterface : public UInterface
 /**
  * 
  */
-class DEMO_MAGE_API IDemoCharacterAnimInterface
+class DEMO_MAGE_API IDemoCharacterToAnimInterface
 {
 	GENERATED_BODY()
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	virtual bool GetIsMoving() = 0;
-	virtual bool GetIsSprinting() = 0;
-	virtual bool GetIsInAir() = 0;
+	UFUNCTION(BlueprintCallable)
+	virtual void StartBasicAttack() = 0;
+
+	UFUNCTION(BlueprintCallable)
+	virtual void StopBasicAttack() = 0;
 };

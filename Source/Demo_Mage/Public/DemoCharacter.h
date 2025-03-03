@@ -38,7 +38,6 @@ public:
 	virtual bool GetIsMoving() override;
 	virtual bool GetIsSprinting() override;
 	virtual bool GetIsInAir() override;
-	virtual bool GetIsBasicAttacking() override;
 
 protected:
 	UFUNCTION()

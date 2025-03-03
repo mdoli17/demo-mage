@@ -22,6 +22,5 @@ void UDemoCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bIsMoving = CharacterInterface->GetIsMoving();
 		bIsSprinting = CharacterInterface->GetIsSprinting();
 		bIsInAir = CharacterInterface->GetIsInAir();
-		bIsAttacking = CharacterInterface->GetIsBasicAttacking();
 	}
 }

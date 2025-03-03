@@ -55,6 +55,7 @@ void ADemoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	EnhancedInputComponent->BindAction(SprintAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::SprintInputCallback);
 	EnhancedInputComponent->BindAction(JumpAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::JumpInputCallback);
 	EnhancedInputComponent->BindAction(CameraMovementAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::CameraMovementInputCallback);
+	EnhancedInputComponent->BindAction(BasicAttackAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::BasicAttackInputCallback);
 }
 
 bool ADemoCharacter::GetIsMoving()
@@ -74,7 +75,7 @@ bool ADemoCharacter::GetIsInAir()
 
 bool ADemoCharacter::GetIsBasicAttacking()
 {
-	return false;
+	return bIsAttacking;
 }
 
 void ADemoCharacter::MoveInputCallback(const FInputActionValue& Value)
@@ -115,4 +116,9 @@ void ADemoCharacter::CameraMovementInputCallback(const FInputActionValue& Value)
 
 	if (CameraValue.X != 0)
 		PlayerController->AddYawInput(CameraValue.X);
+}
+
+void ADemoCharacter::BasicAttackInputCallback(const FInputActionValue& Value)
+{
+	bIsAttacking = Value.Get<bool>();
 }

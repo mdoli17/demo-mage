@@ -52,6 +52,9 @@ protected:
 	UFUNCTION()
 	void CameraMovementInputCallback(const FInputActionValue& Value);
 
+	UFUNCTION()
+	void BasicAttackInputCallback(const FInputActionValue& Value);
+
 	// ------------------- Demo Character ------------------- //
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<UCameraComponent> CameraComponent;
@@ -81,4 +84,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputAction> CameraMovementAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
+	TSoftObjectPtr<UInputAction> BasicAttackAction;
+
+private:
+	bool bIsAttacking; // TODO: Think of a better implementation, animation system shouldn't be responsible for game logic.
 };

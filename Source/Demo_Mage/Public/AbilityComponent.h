@@ -20,26 +20,29 @@ public:
 	// Sets default values for this component's properties
 	UAbilityComponent();
 
-	UFUNCTION(BlueprintCallable, Category="Actions")
+	UFUNCTION(BlueprintCallable, Category="Abilities")
 	bool StartActionByName(FName ActionName, const FActionParams& Params = FActionParams());
 
-	UFUNCTION(BlueprintCallable, Category="Actions")
+	UFUNCTION(BlueprintCallable, Category="Abilities")
 	bool StopActionByName(FName ActionName);
 
-	UFUNCTION(BlueprintCallable, Category="Actions")
+	UFUNCTION(BlueprintCallable, Category="Abilities")
+	bool IsActionRunning(const FName ActionName);
+
+	UFUNCTION(BlueprintCallable, Category="Abilities")
 	void AddAction(TSubclassOf<UAbilityAction> ActionClass);
 
-	UFUNCTION(BlueprintCallable, Category="Actions")
+	UFUNCTION(BlueprintCallable, Category="Abilities")
 	void RemoveAction(TSubclassOf<UAbilityAction> ActionClass);
 
-	UPROPERTY(BlueprintReadOnly, Category="Actions")
+	UPROPERTY(BlueprintReadOnly, Category="Abilities")
 	FGameplayTagContainer ActiveGameplayTags;
 
 protected:
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Actions")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Abilities")
 	TArray<TSubclassOf<UAbilityAction>> InitialActions;
 
-	UPROPERTY(BlueprintReadOnly, Category="Actions")
+	UPROPERTY(BlueprintReadOnly, Category="Abilities")
 	TMap<FName, UAbilityAction*> Actions;
 
 private:

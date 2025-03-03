@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AbilityComponent.h"
 #include "DemoCharacterAnimInterface.h"
 #include "InputActionValue.h"
 #include "Camera/CameraComponent.h"
@@ -62,6 +63,9 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
+	TObjectPtr<UAbilityComponent> AbilityComponent;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
 	float WalkSpeed = 250.f;
 
@@ -87,7 +91,4 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputAction> BasicAttackAction;
-
-private:
-	bool bIsAttacking; // TODO: Think of a better implementation, animation system shouldn't be responsible for game logic.
 };

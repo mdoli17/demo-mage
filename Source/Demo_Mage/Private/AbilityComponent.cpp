@@ -44,6 +44,16 @@ bool UAbilityComponent::StopActionByName(FName ActionName)
 	return ActionToStop->StopAction();
 }
 
+bool UAbilityComponent::IsActionRunning(const FName ActionName)
+{
+	if (!Actions.Contains(ActionName)) return false;
+
+	const UAbilityAction* Action = Actions[ActionName];
+
+	return Action->IsRunning();
+}
+
+
 void UAbilityComponent::AddAction(TSubclassOf<UAbilityAction> ActionClass)
 {
 	if (!ensure(ActionClass)) return;

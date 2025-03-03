@@ -18,6 +18,7 @@ ADemoCharacter::ADemoCharacter()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
+	AbilityComponent = CreateDefaultSubobject<UAbilityComponent>(TEXT("Ability Component"));
 
 	CameraComponent->SetupAttachment(RootComponent);
 	SkeletalMeshComponent->SetupAttachment(CameraComponent);
@@ -75,7 +76,7 @@ bool ADemoCharacter::GetIsInAir()
 
 bool ADemoCharacter::GetIsBasicAttacking()
 {
-	return bIsAttacking;
+	return AbilityComponent->IsActionRunning(TEXT("Basic Attack")); // TODO: Refactor hard-coded names.
 }
 
 void ADemoCharacter::MoveInputCallback(const FInputActionValue& Value)
@@ -120,5 +121,6 @@ void ADemoCharacter::CameraMovementInputCallback(const FInputActionValue& Value)
 
 void ADemoCharacter::BasicAttackInputCallback(const FInputActionValue& Value)
 {
-	bIsAttacking = Value.Get<bool>();
+	const bool ShouldAttack = Value.Get<bool>();
+	ShouldAttack ? AbilityComponent->StartActionByName(TEXT("Basic Attack")) : AbilityComponent->StopActionByName(TEXT("Basic Attack")); // TODO: Refactor hard-coded names.
 }

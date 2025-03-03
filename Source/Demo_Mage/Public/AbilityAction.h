@@ -11,7 +11,7 @@
 /**
  * 
  */
-UCLASS()
+UCLASS(Blueprintable, Abstract)
 class DEMO_MAGE_API UAbilityAction : public UObject
 {
 	GENERATED_BODY()

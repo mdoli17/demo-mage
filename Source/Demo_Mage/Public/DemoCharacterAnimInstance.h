@@ -29,4 +29,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Locomotion")
 	bool bIsInAir;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+	bool bIsAttacking;
 };

@@ -31,5 +31,3 @@ bool UDemoCharacterAnimInstance::HandleNotify(const FAnimNotifyEvent& AnimNotify
 	OnBasicAttackReady.Broadcast();
 	return Super::HandleNotify(AnimNotifyEvent);
 }
-
-// TODO: Define BasicAttackReadyNotify by Invoking OnBasicAttackReady.

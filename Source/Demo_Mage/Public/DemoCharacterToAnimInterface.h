@@ -6,6 +6,10 @@
 #include "UObject/Interface.h"
 #include "DemoCharacterToAnimInterface.generated.h"
 
+// TODO: Define Delegate for OnBasicAttackReady (Maybe change to a better name in the future)
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBasicAttackReady);
+
+
 // This class does not need to be modified.
 UINTERFACE(NotBlueprintable)
 class UDemoCharacterToAnimInterface : public UInterface
@@ -27,4 +31,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void StopBasicAttack() = 0;
+
+	// TODO: Declare a Getter for OnBasicAttackReady
+
+	virtual FOnBasicAttackReady& GetBasicAttackReadyEvent() = 0;
 };

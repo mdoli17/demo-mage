@@ -16,10 +16,7 @@ class DEMO_MAGE_API UDemoCharacterAnimInstance : public UAnimInstance, public ID
 {
 	GENERATED_BODY()
 
-protected:
-	virtual void NativeInitializeAnimation() override;
-	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
-
+public:
 	virtual void StartBasicAttack() override
 	{
 		bIsAttacking = true;
@@ -29,6 +26,16 @@ protected:
 	{
 		bIsAttacking = false;
 	}
+
+	virtual FOnBasicAttackReady& GetBasicAttackReadyEvent() override
+	{
+		return OnBasicAttackReady;
+	}
+
+protected:
+	virtual void NativeInitializeAnimation() override;
+	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+	virtual bool HandleNotify(const FAnimNotifyEvent& AnimNotifyEvent) override;
 
 	IDemoCharacterAnimInterface* CharacterInterface = nullptr;
 
@@ -43,4 +50,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	bool bIsAttacking;
+
+	UPROPERTY()
+	FOnBasicAttackReady OnBasicAttackReady;
 };

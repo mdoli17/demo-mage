@@ -39,6 +39,11 @@ public:
 	virtual bool GetIsSprinting() override;
 	virtual bool GetIsInAir() override;
 
+	USkeletalMeshComponent* GetSkeletalMesh() const
+	{
+		return SkeletalMeshComponent;
+	}
+
 protected:
 	UFUNCTION()
 	void MoveInputCallback(const FInputActionValue& Value);

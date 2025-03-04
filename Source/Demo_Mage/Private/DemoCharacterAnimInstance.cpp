@@ -24,3 +24,12 @@ void UDemoCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		bIsInAir = CharacterInterface->GetIsInAir();
 	}
 }
+
+bool UDemoCharacterAnimInstance::HandleNotify(const FAnimNotifyEvent& AnimNotifyEvent)
+{
+	UE_LOG(LogTemp, Log, TEXT("Notify Name: %s"), *AnimNotifyEvent.NotifyName.ToString());
+	OnBasicAttackReady.Broadcast();
+	return Super::HandleNotify(AnimNotifyEvent);
+}
+
+// TODO: Define BasicAttackReadyNotify by Invoking OnBasicAttackReady.

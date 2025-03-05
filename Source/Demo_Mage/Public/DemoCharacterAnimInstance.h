@@ -32,6 +32,21 @@ public:
 		return OnBasicAttackReady;
 	}
 
+	virtual void SetAbilityType(const EMageAbilityType AbilityType) override
+	{
+		CurrentAbility = AbilityType;
+	}
+
+	virtual void StartAbility() override
+	{
+		bIsUsingAbility = true;
+	}
+
+	virtual void StopAbility() override
+	{
+		bIsUsingAbility = false;
+	}
+
 protected:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
@@ -50,6 +65,12 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	bool bIsAttacking;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+	bool bIsUsingAbility;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+	EMageAbilityType CurrentAbility;
 
 	UPROPERTY()
 	FOnBasicAttackReady OnBasicAttackReady;

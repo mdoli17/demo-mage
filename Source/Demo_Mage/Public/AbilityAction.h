@@ -30,6 +30,9 @@ public:
 	bool StopAction();
 
 	UFUNCTION(BlueprintCallable, Category="Action")
+	bool ExecuteAction(const FActionParams& Params);
+
+	UFUNCTION(BlueprintCallable, Category="Action")
 	FName GetActionName() const
 	{
 		return Name;
@@ -56,6 +59,9 @@ protected:
 
 	UFUNCTION(BlueprintNativeEvent, Category="Action")
 	bool StopActionImplementation();
+
+	UFUNCTION(BlueprintNativeEvent, Category="Action")
+	bool ExecuteActionImplementation(const FActionParams& Params);
 
 	UFUNCTION(BlueprintCallable, Category="Action")
 	UAbilityComponent* GetOwningComponent() const;

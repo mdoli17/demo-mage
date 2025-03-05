@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "EMageAbilityType.h"
+#include "ECharacterAbilityType.h"
 #include "DemoCharacterToAnimInterface.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBasicAttackReady);
@@ -33,7 +33,7 @@ public:
 
 	virtual FOnBasicAttackReady& GetBasicAttackReadyEvent() = 0;
 
-	virtual void SetAbilityType(const EMageAbilityType AbilityType) = 0;
+	virtual void SetAbilityType(const ECharacterAbilityType AbilityType) = 0;
 
 	UFUNCTION(BlueprintCallable)
 	virtual void StartAbility() = 0;

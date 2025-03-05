@@ -44,6 +44,15 @@ bool UAbilityComponent::StopActionByName(FName ActionName)
 	return ActionToStop->StopAction();
 }
 
+bool UAbilityComponent::ExecuteActionByName(FName ActionName, const FActionParams& Params)
+{
+	if (!Actions.Contains(ActionName)) return false;
+
+	UAbilityAction* ActionToExecute = Actions[ActionName];
+	if (!ActionToExecute->CanStartAction()) return false;
+	return ActionToExecute->ExecuteAction(Params);
+}
+
 bool UAbilityComponent::IsActionRunning(const FName ActionName)
 {
 	if (!Actions.Contains(ActionName)) return false;
@@ -65,6 +74,7 @@ void UAbilityComponent::AddAction(TSubclassOf<UAbilityAction> ActionClass)
 
 	NewAction->Initialize(Owner);
 	Actions.Add(NewAction->GetActionName(), NewAction);
+	ActionsByClass.Add(ActionClass, NewAction);
 }
 
 void UAbilityComponent::RemoveAction(TSubclassOf<UAbilityAction> ActionClass)
@@ -72,6 +82,15 @@ void UAbilityComponent::RemoveAction(TSubclassOf<UAbilityAction> ActionClass)
 	if (!ensure(ActionClass)) return;
 
 	// TODO: Implement removing action.
+}
+
+FName UAbilityComponent::GetNameForAbilityClass(TSubclassOf<UAbilityAction> ActionClass)
+{
+	if (!ensure(ActionClass)) return "";
+
+	const UAbilityAction* ActionInstance = ActionsByClass[ActionClass];
+	if (!ActionInstance) return "";
+	return ActionInstance->GetActionName();
 }
 
 void UAbilityComponent::SetupInitialActions()

@@ -32,7 +32,7 @@ public:
 		return OnBasicAttackReady;
 	}
 
-	virtual void SetAbilityType(const EMageAbilityType AbilityType) override
+	virtual void SetAbilityType(const ECharacterAbilityType AbilityType) override
 	{
 		CurrentAbility = AbilityType;
 	}
@@ -70,7 +70,7 @@ protected:
 	bool bIsUsingAbility;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
-	EMageAbilityType CurrentAbility;
+	ECharacterAbilityType CurrentAbility;
 
 	UPROPERTY()
 	FOnBasicAttackReady OnBasicAttackReady;

@@ -14,6 +14,7 @@ class DEMO_MAGE_API UAbilityComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
+protected:
 	virtual void BeginPlay() override;
 
 public:
@@ -27,6 +28,9 @@ public:
 	bool StopActionByName(FName ActionName);
 
 	UFUNCTION(BlueprintCallable, Category="Abilities")
+	bool ExecuteActionByName(FName ActionName, const FActionParams& Params = FActionParams());
+
+	UFUNCTION(BlueprintCallable, Category="Abilities")
 	bool IsActionRunning(const FName ActionName);
 
 	UFUNCTION(BlueprintCallable, Category="Abilities")
@@ -34,6 +38,9 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category="Abilities")
 	void RemoveAction(TSubclassOf<UAbilityAction> ActionClass);
+
+	UFUNCTION(BlueprintCallable, Category="Utilities")
+	FName GetNameForAbilityClass(TSubclassOf<UAbilityAction> ActionClass);
 
 	UPROPERTY(BlueprintReadOnly, Category="Abilities")
 	FGameplayTagContainer ActiveGameplayTags;
@@ -44,6 +51,9 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category="Abilities")
 	TMap<FName, UAbilityAction*> Actions;
+
+	UPROPERTY(BlueprintReadOnly, Category="Abilities")
+	TMap<TSubclassOf<UAbilityAction>, UAbilityAction*> ActionsByClass;
 
 private:
 	void SetupInitialActions();

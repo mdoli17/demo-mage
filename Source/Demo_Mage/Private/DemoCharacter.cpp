@@ -18,7 +18,7 @@ ADemoCharacter::ADemoCharacter()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
-	AbilityComponent = CreateDefaultSubobject<UAbilityComponent>(TEXT("Ability Component"));
+	AbilityComponent = CreateDefaultSubobject<UDemoAbilityComponent>(TEXT("Ability Component"));
 
 	CameraComponent->SetupAttachment(RootComponent);
 	SkeletalMeshComponent->SetupAttachment(CameraComponent);
@@ -57,6 +57,8 @@ void ADemoCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	EnhancedInputComponent->BindAction(JumpAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::JumpInputCallback);
 	EnhancedInputComponent->BindAction(CameraMovementAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::CameraMovementInputCallback);
 	EnhancedInputComponent->BindAction(BasicAttackAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::BasicAttackInputCallback);
+	EnhancedInputComponent->BindAction(SelectAbilityAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::SelectAbilityInputCallback);
+	EnhancedInputComponent->BindAction(AbilityAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &ADemoCharacter::AbilityActionInputCallback);
 }
 
 bool ADemoCharacter::GetIsMoving()
@@ -118,4 +120,16 @@ void ADemoCharacter::BasicAttackInputCallback(const FInputActionValue& Value)
 {
 	const bool ShouldAttack = Value.Get<bool>();
 	ShouldAttack ? AbilityComponent->StartActionByName(TEXT("Basic Attack")) : AbilityComponent->StopActionByName(TEXT("Basic Attack")); // TODO: Refactor hard-coded names.
+}
+
+void ADemoCharacter::SelectAbilityInputCallback(const FInputActionValue& Value)
+{
+	const int AbilityIndex = static_cast<int>(Value.Get<float>());
+	AbilityComponent->ExecuteActionByName(TEXT("Select Ability"), FActionParams{AbilityIndex});
+}
+
+void ADemoCharacter::AbilityActionInputCallback(const FInputActionValue& Value)
+{
+	const bool UseAbility = Value.Get<bool>();
+	UseAbility ? AbilityComponent->StartActionByName("Selected Ability") : AbilityComponent->StopActionByName("Selected Ability");
 }

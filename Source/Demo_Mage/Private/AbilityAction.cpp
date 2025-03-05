@@ -45,6 +45,13 @@ bool UAbilityAction::StopAction()
 	return bActionStopped;;
 }
 
+bool UAbilityAction::ExecuteAction(const FActionParams& Params)
+{
+	const bool bActionExecuted = ExecuteActionImplementation(Params);
+
+	return bActionExecuted;
+}
+
 bool UAbilityAction::CanStartAction_Implementation()
 {
 	const UAbilityComponent* ActionComponent = GetOwningComponent();
@@ -67,6 +74,11 @@ bool UAbilityAction::StartActionImplementation_Implementation(const FActionParam
 }
 
 bool UAbilityAction::StopActionImplementation_Implementation()
+{
+	return true;
+}
+
+bool UAbilityAction::ExecuteActionImplementation_Implementation(const FActionParams& Params)
 {
 	return true;
 }

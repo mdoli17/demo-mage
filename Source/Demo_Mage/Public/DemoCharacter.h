@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilityComponent.h"
+#include "DemoAbilityComponent.h"
 #include "DemoCharacterAnimInterface.h"
 #include "InputActionValue.h"
 #include "Camera/CameraComponent.h"
@@ -60,6 +60,12 @@ protected:
 	UFUNCTION()
 	void BasicAttackInputCallback(const FInputActionValue& Value);
 
+	UFUNCTION()
+	void SelectAbilityInputCallback(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void AbilityActionInputCallback(const FInputActionValue& Value);
+
 	// ------------------- Demo Character ------------------- //
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<UCameraComponent> CameraComponent;
@@ -68,7 +74,7 @@ protected:
 	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
-	TObjectPtr<UAbilityComponent> AbilityComponent;
+	TObjectPtr<UDemoAbilityComponent> AbilityComponent;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
 	float WalkSpeed = 250.f;
@@ -95,4 +101,10 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputAction> BasicAttackAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
+	TSoftObjectPtr<UInputAction> SelectAbilityAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
+	TSoftObjectPtr<UInputAction> AbilityAction;
 };

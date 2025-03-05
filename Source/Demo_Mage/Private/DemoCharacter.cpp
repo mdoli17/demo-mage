@@ -131,5 +131,10 @@ void ADemoCharacter::SelectAbilityInputCallback(const FInputActionValue& Value)
 void ADemoCharacter::AbilityActionInputCallback(const FInputActionValue& Value)
 {
 	const bool UseAbility = Value.Get<bool>();
-	UseAbility ? AbilityComponent->StartActionByName("Selected Ability") : AbilityComponent->StopActionByName("Selected Ability");
+	UE_LOG(LogTemp, Warning, TEXT("The boolean value is %s"), ( UseAbility ? TEXT("true"): TEXT("false") ));
+	if (UseAbility)
+		AbilityComponent->StartActionByName("Selected Ability");
+	else
+
+		AbilityComponent->StopActionByName("Selected Ability");
 }

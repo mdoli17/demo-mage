@@ -3,6 +3,11 @@
 
 #include "Demo_Mage/Public/DemoCharacterAnimInstance.h"
 
+FVector UDemoCharacterAnimInstance::GetProjectileSpawnLocation()
+{
+	return GetSkelMeshComponent()->GetSocketLocation(ProjectileSocketName);
+}
+
 void UDemoCharacterAnimInstance::NativeInitializeAnimation()
 {
 	Super::NativeInitializeAnimation();

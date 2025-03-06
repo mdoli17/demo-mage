@@ -50,6 +50,10 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Action")
 	FGameplayTagContainer BlockingTags;
 
+
+	UFUNCTION(BlueprintCallable, Category="Action")
+	virtual UWorld* GetWorld() const override;
+
 protected:
 	UFUNCTION(BlueprintNativeEvent, Category="Action")
 	void Initialize();

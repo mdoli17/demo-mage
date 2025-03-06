@@ -5,14 +5,13 @@
 #include "CoreMinimal.h"
 #include "AbilityAction.h"
 #include "DemoCharacterToAnimInterface.h"
-#include "DemoProjectile.h"
-#include "BasicAttackAction.generated.h"
+#include "DemoCharacterAbilityAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_MAGE_API UBasicAttackAction : public UAbilityAction
+class DEMO_MAGE_API UDemoCharacterAbilityAction : public UAbilityAction
 {
 	GENERATED_BODY()
 
@@ -21,13 +20,6 @@ public:
 	virtual bool StartActionImplementation_Implementation(const FActionParams& Params) override;
 	virtual bool StopActionImplementation_Implementation() override;
 
-protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Basic Attack")
-	TSubclassOf<ADemoProjectile> ProjectileClass;
-	
 private:
-	IDemoCharacterToAnimInterface* AnimInterface;
-
-	UFUNCTION()
-	void BasicAttackActionReadyCallback();
+	IDemoCharacterToAnimInterface* CharacterToAnimInterface;
 };

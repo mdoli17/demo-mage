@@ -39,9 +39,14 @@ public:
 	virtual bool GetIsSprinting() override;
 	virtual bool GetIsInAir() override;
 
-	USkeletalMeshComponent* GetSkeletalMesh() const
+	const USkeletalMeshComponent* GetSkeletalMesh() const
 	{
 		return SkeletalMeshComponent;
+	}
+
+	const UCameraComponent* GetCamera() const
+	{
+		return CameraComponent;
 	}
 
 protected:

@@ -33,6 +33,9 @@ public:
 
 	virtual FOnBasicAttackReady& GetBasicAttackReadyEvent() = 0;
 
+	UFUNCTION(BlueprintCallable)
+	virtual FVector GetProjectileSpawnLocation() = 0;
+
 	virtual void SetAbilityType(const ECharacterAbilityType AbilityType) = 0;
 
 	UFUNCTION(BlueprintCallable)

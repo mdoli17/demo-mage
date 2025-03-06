@@ -52,6 +52,11 @@ bool UAbilityAction::ExecuteAction(const FActionParams& Params)
 	return bActionExecuted;
 }
 
+UWorld* UAbilityAction::GetWorld() const
+{
+	return Owner ? Owner->GetWorld() : nullptr;
+}
+
 bool UAbilityAction::CanStartAction_Implementation()
 {
 	const UAbilityComponent* ActionComponent = GetOwningComponent();

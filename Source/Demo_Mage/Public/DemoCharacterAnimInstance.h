@@ -32,6 +32,8 @@ public:
 		return OnBasicAttackReady;
 	}
 
+	virtual FVector GetProjectileSpawnLocation() override;
+
 	virtual void SetAbilityType(const ECharacterAbilityType AbilityType) override
 	{
 		CurrentAbility = AbilityType;
@@ -74,4 +76,7 @@ protected:
 
 	UPROPERTY()
 	FOnBasicAttackReady OnBasicAttackReady;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Basic Attack")
+	FName ProjectileSocketName;
 };

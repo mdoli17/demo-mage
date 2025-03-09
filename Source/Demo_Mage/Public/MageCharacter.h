@@ -6,7 +6,6 @@
 #include "DemoCharacter.h"
 #include "InputActionValue.h"
 #include "Camera/CameraComponent.h"
-#include "DemoAbilityComponent.h"
 #include "MageCharacter.generated.h"
 
 class UInputAction;
@@ -75,9 +74,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
-	TObjectPtr<UDemoAbilityComponent> AbilityComponent;
-
+	
 	UFUNCTION()
 	void MoveInputCallback(const FInputActionValue& Value);
 

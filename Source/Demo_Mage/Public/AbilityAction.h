@@ -68,7 +68,7 @@ protected:
 	bool ExecuteActionImplementation(const FActionParams& Params);
 
 	UFUNCTION(BlueprintCallable, Category="Action")
-	UAbilityComponent* GetOwningComponent() const;
+	virtual UAbilityComponent* GetOwningComponent() const;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Action", meta=(AllowPrivateAccess))
 	FName Name;

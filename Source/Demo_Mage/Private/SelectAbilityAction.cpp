@@ -7,10 +7,14 @@
 
 bool USelectAbilityAction::ExecuteActionImplementation_Implementation(const FActionParams& Params)
 {
-	// UDemoAbilityComponent* DemoAbilityComponent = Cast<UDemoAbilityComponent>(GetOwningComponent());
-	// const ECharacterAbilityType AbilityType = static_cast<ECharacterAbilityType>(Params.IntValue);
-	// DemoAbilityComponent->SelectAbility(AbilityType);
-	// Cast<IDemoCharacterToAnimInterface>(DemoCharacter->GetSkeletalMesh()->GetAnimInstance())->SetAbilityType(AbilityType);
+	UDemoAbilityComponent* DemoAbilityComponent = GetOwningComponent();
+	const ECharacterAbilityType AbilityType = static_cast<ECharacterAbilityType>(Params.IntValue);
+	DemoAbilityComponent->SelectAbility(AbilityType);
+
+	IDemoCharacterToAnimInterface* AnimInterface = Cast<IDemoCharacterToAnimInterface>(DemoCharacter->GetSkeletalMesh()->GetAnimInstance());
+	if (!ensure(AnimInterface)) return false;
+
+	AnimInterface->SetAbilityType(AbilityType);
 
 	return true;
 }

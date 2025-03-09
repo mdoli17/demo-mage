@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "DemoCharacterAnimInterface.h"
 #include "GameFramework/Character.h"
+#include "DemoAbilityComponent.h"
 #include "DemoCharacter.generated.h"
 
 UCLASS()
@@ -44,4 +45,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
 	float SprintSpeed = 600.f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
+	TObjectPtr<UDemoAbilityComponent> AbilityComponent;
 };

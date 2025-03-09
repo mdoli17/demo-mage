@@ -4,16 +4,17 @@
 
 #include "CoreMinimal.h"
 #include "AbilityAction.h"
+#include "DemoAbilityAction.h"
 #include "SelectAbilityAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_MAGE_API USelectAbilityAction : public UAbilityAction
+class DEMO_MAGE_API USelectAbilityAction : public UDemoAbilityAction
 {
 	GENERATED_BODY()
 
-public:
+protected:
 	virtual bool ExecuteActionImplementation_Implementation(const FActionParams& Params) override;
 };

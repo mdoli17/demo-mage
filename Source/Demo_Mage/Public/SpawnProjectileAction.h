@@ -4,15 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "AbilityAction.h"
-#include "DemoCharacterToAnimInterface.h"
+#include "DemoAbilityAction.h"
 #include "DemoProjectile.h"
-#include "BasicAttackAction.generated.h"
+#include "SpawnProjectileAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_MAGE_API UBasicAttackAction : public UAbilityAction
+class DEMO_MAGE_API USpawnProjectileAction : public UDemoAbilityAction
 {
 	GENERATED_BODY()
 
@@ -24,10 +24,8 @@ public:
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Basic Attack")
 	TSubclassOf<ADemoProjectile> ProjectileClass;
-	
-private:
-	IDemoCharacterToAnimInterface* AnimInterface;
 
+private:
 	UFUNCTION()
 	void BasicAttackActionReadyCallback();
 };

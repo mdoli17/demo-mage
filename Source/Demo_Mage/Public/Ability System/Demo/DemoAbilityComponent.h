@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilityComponent.h"
+#include "Ability System/AbilityComponent.h"
 #include "ECharacterAbilityType.h"
 #include "DemoAbilityComponent.generated.h"
 

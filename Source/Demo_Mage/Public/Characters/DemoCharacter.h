@@ -3,10 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AttributeComponent.h"
-#include "DemoCharacterAnimInterface.h"
+#include "Attribute System/AttributeComponent.h"
+#include "Animations/DemoCharacterAnimInterface.h"
 #include "GameFramework/Character.h"
-#include "DemoAbilityComponent.h"
+#include "Ability System/Demo/DemoAbilityComponent.h"
 #include "DemoCharacter.generated.h"
 
 UCLASS()

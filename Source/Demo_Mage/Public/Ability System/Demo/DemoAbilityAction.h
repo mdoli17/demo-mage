@@ -3,13 +3,10 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilityAction.h"
-#include "DemoCharacterToAnimInterface.h"
+#include "Ability System/AbilityAction.h"
+#include "Characters/Animations/DemoCharacterToAnimInterface.h"
 #include "DemoAbilityAction.generated.h"
 
-/**
- * 
- */
 UCLASS()
 class DEMO_MAGE_API UDemoAbilityAction : public UAbilityAction
 {

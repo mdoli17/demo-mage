@@ -4,14 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "ActionParams.h"
-#include "DemoCharacter.h"
+#include "Characters/DemoCharacter.h"
 #include "GameplayTagContainer.h"
 #include "UObject/Object.h"
 #include "AbilityAction.generated.h"
 
-/**
- * 
- */
+class UAbilityComponent;
+
 UCLASS(Blueprintable, Abstract)
 class DEMO_MAGE_API UAbilityAction : public UObject
 {

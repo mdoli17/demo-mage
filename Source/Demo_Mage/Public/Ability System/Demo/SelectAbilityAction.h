@@ -3,7 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilityAction.h"
+#include "Ability System/AbilityAction.h"
 #include "DemoAbilityAction.h"
 #include "SelectAbilityAction.generated.h"
 

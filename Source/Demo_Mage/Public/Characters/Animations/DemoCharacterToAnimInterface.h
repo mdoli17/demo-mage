@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
-#include "ECharacterAbilityType.h"
+#include "Ability System/Demo/ECharacterAbilityType.h"
 #include "DemoCharacterToAnimInterface.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBasicAttackReady);

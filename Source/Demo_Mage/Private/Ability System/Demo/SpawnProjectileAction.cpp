@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SpawnProjectileAction.h"
+#include "Ability System/Demo/SpawnProjectileAction.h"
 
-#include "DemoCharacterToAnimInterface.h"
+#include "Characters/Animations/DemoCharacterToAnimInterface.h"
 
 void USpawnProjectileAction::Initialize_Implementation()
 {

@@ -1,8 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "AbilityComponent.h"
-#include "AbilityAction.h"
+#include "Ability System/AbilityComponent.h"
+#include "Ability System/AbilityAction.h"
 
 
 // Sets default values for this component's properties

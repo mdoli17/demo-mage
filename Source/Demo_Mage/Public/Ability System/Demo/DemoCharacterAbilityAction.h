@@ -3,16 +3,16 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "AbilityAction.h"
-#include "DemoAbilityAction.h"
-#include "DemoProjectile.h"
-#include "SpawnProjectileAction.generated.h"
+#include "Ability System/AbilityAction.h"
+#include "Characters/Animations/DemoCharacterToAnimInterface.h"
+
+#include "DemoCharacterAbilityAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_MAGE_API USpawnProjectileAction : public UDemoAbilityAction
+class DEMO_MAGE_API UDemoCharacterAbilityAction : public UAbilityAction
 {
 	GENERATED_BODY()
 
@@ -21,11 +21,6 @@ public:
 	virtual bool StartActionImplementation_Implementation(const FActionParams& Params) override;
 	virtual bool StopActionImplementation_Implementation() override;
 
-protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Basic Attack")
-	TSubclassOf<ADemoProjectile> ProjectileClass;
-
 private:
-	UFUNCTION()
-	void BasicAttackActionReadyCallback();
+	IDemoCharacterToAnimInterface* CharacterToAnimInterface;
 };

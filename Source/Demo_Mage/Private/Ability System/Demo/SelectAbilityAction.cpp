@@ -1,9 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "SelectAbilityAction.h"
+#include "Ability System/Demo/SelectAbilityAction.h"
 
-#include "DemoCharacterToAnimInterface.h"
+#include "Characters/Animations/DemoCharacterToAnimInterface.h"
 
 bool USelectAbilityAction::ExecuteActionImplementation_Implementation(const FActionParams& Params)
 {

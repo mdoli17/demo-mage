@@ -18,9 +18,7 @@ class DEMO_MAGE_API UDemoAbilityAction : public UAbilityAction
 protected:
 	virtual void Initialize_Implementation() override;
 
-	UFUNCTION(BlueprintCallable, Category="Demo Ability Ability Action")
 	virtual UDemoAbilityComponent* GetOwningComponent() const override;
 
-	UFUNCTION(BlueprintCallable, Category="Demo Ability Ability Action")
 	IDemoCharacterToAnimInterface* AnimInterface;
 };

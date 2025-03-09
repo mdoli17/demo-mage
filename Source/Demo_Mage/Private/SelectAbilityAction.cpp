@@ -11,9 +11,6 @@ bool USelectAbilityAction::ExecuteActionImplementation_Implementation(const FAct
 	const ECharacterAbilityType AbilityType = static_cast<ECharacterAbilityType>(Params.IntValue);
 	DemoAbilityComponent->SelectAbility(AbilityType);
 
-	IDemoCharacterToAnimInterface* AnimInterface = Cast<IDemoCharacterToAnimInterface>(DemoCharacter->GetSkeletalMesh()->GetAnimInstance());
-	if (!ensure(AnimInterface)) return false;
-
 	AnimInterface->SetAbilityType(AbilityType);
 
 	return true;

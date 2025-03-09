@@ -3,15 +3,9 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "DemoAbilityComponent.h"
 #include "DemoCharacterAnimInterface.h"
-#include "InputActionValue.h"
-#include "Camera/CameraComponent.h"
 #include "GameFramework/Character.h"
 #include "DemoCharacter.generated.h"
-
-class UInputAction;
-class UInputMappingContext;
 
 UCLASS()
 class DEMO_MAGE_API ADemoCharacter : public ACharacter, public IDemoCharacterAnimInterface
@@ -39,77 +33,15 @@ public:
 	virtual bool GetIsSprinting() override;
 	virtual bool GetIsInAir() override;
 
-	const USkeletalMeshComponent* GetSkeletalMesh() const
+	virtual USkeletalMeshComponent* GetSkeletalMesh() const
 	{
-		return SkeletalMeshComponent;
-	}
-
-	const UCameraComponent* GetCamera() const
-	{
-		return CameraComponent;
+		return GetMesh();
 	}
 
 protected:
-	UFUNCTION()
-	void MoveInputCallback(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void SprintInputCallback(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void JumpInputCallback(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void CameraMovementInputCallback(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void BasicAttackInputCallback(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void SelectAbilityInputCallback(const FInputActionValue& Value);
-
-	UFUNCTION()
-	void AbilityActionInputCallback(const FInputActionValue& Value);
-
-	// ------------------- Demo Character ------------------- //
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
-	TObjectPtr<UCameraComponent> CameraComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
-	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
-	TObjectPtr<UDemoAbilityComponent> AbilityComponent;
-
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
 	float WalkSpeed = 250.f;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
 	float SprintSpeed = 600.f;
-
-
-	// ------------------- Enhanced Input ------------------- //
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputMappingContext> InputMappingContext;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputAction> MoveAction;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputAction> SprintAction;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputAction> JumpAction;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputAction> CameraMovementAction;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputAction> BasicAttackAction;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputAction> SelectAbilityAction;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
-	TSoftObjectPtr<UInputAction> AbilityAction;
 };

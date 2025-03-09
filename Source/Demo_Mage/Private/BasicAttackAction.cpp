@@ -27,26 +27,26 @@ bool UBasicAttackAction::StopActionImplementation_Implementation()
 
 void UBasicAttackAction::BasicAttackActionReadyCallback()
 {
-	FHitResult HitResult;
-	const FVector LineStart = DemoCharacter->GetCamera()->GetComponentLocation();
-	const FVector LineEnd = LineStart + DemoCharacter->GetCamera()->GetForwardVector() * 100000.0f;
-	GetWorld()->LineTraceSingleByChannel(HitResult, LineStart, LineEnd, ECC_Visibility);
-
-	const FVector ProjectileDestination = HitResult.bBlockingHit ? HitResult.Location : LineEnd;
-
-	DrawDebugLine(GetWorld(), LineStart, ProjectileDestination, HitResult.bBlockingHit ? FColor::Green : FColor::Orange, false, 5.0f);
-
-	const FVector SpawnPoint = AnimInterface->GetProjectileSpawnLocation();
-	const FRotator SpawnRotator = FRotator::ZeroRotator;
-	const FVector ProjectileDirection = (ProjectileDestination - SpawnPoint).GetSafeNormal();
-	const FActorSpawnParameters Parameters;
-
-	ADemoProjectile* Projectile = GetWorld()->SpawnActor<ADemoProjectile>(ProjectileClass, SpawnPoint, SpawnRotator, Parameters);
-	if (Projectile)
-	{
-		Projectile->Setup(Owner);
-		Projectile->Launch(ProjectileDirection);
-	}
+	// FHitResult HitResult;
+	// const FVector LineStart = DemoCharacter->GetCamera()->GetComponentLocation();
+	// const FVector LineEnd = LineStart + DemoCharacter->GetCamera()->GetForwardVector() * 100000.0f;
+	// GetWorld()->LineTraceSingleByChannel(HitResult, LineStart, LineEnd, ECC_Visibility);
+	//
+	// const FVector ProjectileDestination = HitResult.bBlockingHit ? HitResult.Location : LineEnd;
+	//
+	// DrawDebugLine(GetWorld(), LineStart, ProjectileDestination, HitResult.bBlockingHit ? FColor::Green : FColor::Orange, false, 5.0f);
+	//
+	// const FVector SpawnPoint = AnimInterface->GetProjectileSpawnLocation();
+	// const FRotator SpawnRotator = FRotator::ZeroRotator;
+	// const FVector ProjectileDirection = (ProjectileDestination - SpawnPoint).GetSafeNormal();
+	// const FActorSpawnParameters Parameters;
+	//
+	// ADemoProjectile* Projectile = GetWorld()->SpawnActor<ADemoProjectile>(ProjectileClass, SpawnPoint, SpawnRotator, Parameters);
+	// if (Projectile)
+	// {
+	// 	Projectile->Setup(Owner);
+	// 	Projectile->Launch(ProjectileDirection);
+	// }
 
 	UE_LOG(LogTemp, Log, TEXT("Called Basic Attack Action Ready Callback"));
 }

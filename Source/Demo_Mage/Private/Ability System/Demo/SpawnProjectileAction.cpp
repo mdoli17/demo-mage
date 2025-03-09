@@ -43,12 +43,12 @@ void USpawnProjectileAction::BasicAttackActionReadyCallback()
 	const FVector SpawnPoint = AnimInterface->GetProjectileSpawnLocation();
 	const FRotator SpawnRotator = FRotator::ZeroRotator;
 	const FVector ProjectileDirection = (ProjectileDestination - SpawnPoint).GetSafeNormal();
-	const FActorSpawnParameters Parameters;
+	FActorSpawnParameters Parameters;
+	Parameters.Instigator = DemoCharacter;
 
 	ADemoProjectile* Projectile = GetWorld()->SpawnActor<ADemoProjectile>(ProjectileClass, SpawnPoint, SpawnRotator, Parameters);
 	if (Projectile)
 	{
-		Projectile->Setup(Owner);
 		Projectile->Launch(ProjectileDirection);
 	}
 

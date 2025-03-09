@@ -7,10 +7,11 @@
 #include "Animations/DemoCharacterAnimInterface.h"
 #include "GameFramework/Character.h"
 #include "Ability System/Demo/DemoAbilityComponent.h"
+#include "Attribute System/HealthComponentProvider.h"
 #include "DemoCharacter.generated.h"
 
 UCLASS()
-class DEMO_MAGE_API ADemoCharacter : public ACharacter, public IDemoCharacterAnimInterface
+class DEMO_MAGE_API ADemoCharacter : public ACharacter, public IDemoCharacterAnimInterface, public IHealthComponentProvider
 {
 private:
 	GENERATED_BODY()
@@ -34,6 +35,11 @@ public:
 	virtual bool GetIsMoving() override;
 	virtual bool GetIsSprinting() override;
 	virtual bool GetIsInAir() override;
+
+	virtual UAttributeComponent* GetHealthComponent() override
+	{
+		return HealthComponent;
+	}
 
 	virtual USkeletalMeshComponent* GetSkeletalMesh() const
 	{

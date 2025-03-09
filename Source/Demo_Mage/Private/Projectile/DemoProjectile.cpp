@@ -18,7 +18,8 @@ ADemoProjectile::ADemoProjectile()
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Projectile Movement"));
 
 	SphereComponent->SetupAttachment(RootComponent);
-	SphereComponent->OnComponentHit.AddDynamic(this, &ADemoProjectile::ProjectileHitHandler);
+
+	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ADemoProjectile::ProjectileOverlapBeginHandler);
 
 	ProjectileMovementComponent->SetUpdatedComponent(SphereComponent);
 	ProjectileMovementComponent->InitialSpeed = 5000.0f;
@@ -26,7 +27,7 @@ ADemoProjectile::ADemoProjectile()
 	ProjectileMovementComponent->bRotationFollowsVelocity = true;
 	ProjectileMovementComponent->ProjectileGravityScale = 0.0f;
 
-	InitialLifeSpan = 3.0f; // TODO: Handle hard-coded values.
+	InitialLifeSpan = 3.0f;
 }
 
 // Called when the game starts or when spawned
@@ -41,25 +42,22 @@ void ADemoProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
-void ADemoProjectile::Setup(AActor* InstigatorActor)
-{
-	Instigator = InstigatorActor;
-}
-
 void ADemoProjectile::Launch(const FVector& Direction) const
 {
 	ProjectileMovementComponent->Velocity = Direction * ProjectileMovementComponent->InitialSpeed;
 }
 
-void ADemoProjectile::ProjectileHitHandler(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+void ADemoProjectile::ProjectileOverlapBeginHandler(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                                    const FHitResult& SweepResult)
 {
-	if (OtherActor == Instigator) return;
+	if (OtherActor == GetInstigator()) return;
 
-	OnProjectileHit(HitComponent, OtherActor, OtherComponent, NormalImpulse, Hit);
+	OnProjectileBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
 
 	Destroy();
 }
 
-void ADemoProjectile::OnProjectileHit_Implementation(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+void ADemoProjectile::OnProjectileBeginOverlap_Implementation(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,
+                                                              const FHitResult& SweepResult)
 {
 }

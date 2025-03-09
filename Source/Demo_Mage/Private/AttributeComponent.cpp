@@ -4,29 +4,18 @@
 #include "AttributeComponent.h"
 
 
-// Sets default values for this component's properties
 UAttributeComponent::UAttributeComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
-
-	// ...
 }
 
-
-// Called when the game starts
 void UAttributeComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	Reset();
-	// ...
 }
 
-
-// Called every frame
-void UAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                        FActorComponentTickFunction* ThisTickFunction)
+void UAttributeComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
@@ -55,7 +44,6 @@ bool UAttributeComponent::HasEnough(const float Amount) const
 {
 	return CurrentValue >= Amount;
 }
-
 
 void UAttributeComponent::SingleUse_Implementation(const float Amount)
 {
@@ -97,7 +85,6 @@ void UAttributeComponent::HandleAttributeDepletion()
 	OnAttributeDepleted.Broadcast();
 	CheckRegen();
 }
-
 
 void UAttributeComponent::CheckRegen()
 {

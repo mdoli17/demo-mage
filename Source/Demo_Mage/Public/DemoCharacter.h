@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AttributeComponent.h"
 #include "DemoCharacterAnimInterface.h"
 #include "GameFramework/Character.h"
 #include "DemoAbilityComponent.h"
@@ -48,4 +49,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<UDemoAbilityComponent> AbilityComponent;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
+	TObjectPtr<UAttributeComponent> HealthComponent;
 };

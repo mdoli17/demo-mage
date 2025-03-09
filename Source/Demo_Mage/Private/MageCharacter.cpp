@@ -17,7 +17,6 @@ AMageCharacter::AMageCharacter()
 
 	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
 	SkeletalMeshComponent = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Skeletal Mesh"));
-	AbilityComponent = CreateDefaultSubobject<UDemoAbilityComponent>(TEXT("Ability Component"));
 
 	CameraComponent->SetupAttachment(RootComponent);
 	SkeletalMeshComponent->SetupAttachment(CameraComponent);

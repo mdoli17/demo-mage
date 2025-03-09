@@ -21,6 +21,30 @@ public:
 	// Sets default values for this component's properties
 	UAttributeComponent();
 
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+	bool HasEnough(float Amount) const;
+
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Stamina")
+	void SingleUse(float Amount);
+
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+	void StartUsing(float UseRate);
+
+	UFUNCTION(BlueprintCallable, Category = "Stamina")
+	void StopUsing(float UseRate);
+
+	UFUNCTION(BlueprintCallable, Category="Stamina")
+	void Reset();
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeDepletedSignature OnAttributeDepleted;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeReplenishedSignature OnAttributeReplenished;
+
+	UPROPERTY(BlueprintAssignable)
+	FOnAttributeUpdatedSignature OnAttributeUpdated;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -49,31 +73,6 @@ protected:
 public:
 	// Called every frame
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
-
-	UFUNCTION(BlueprintCallable, Category = "Stamina")
-	bool HasEnough(float Amount) const;
-
-	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Stamina")
-	void SingleUse(float Amount);
-
-	UFUNCTION(BlueprintCallable, Category = "Stamina")
-	void StartUsing(float UseRate);
-
-	UFUNCTION(BlueprintCallable, Category = "Stamina")
-	void StopUsing(float UseRate);
-
-	UFUNCTION(BlueprintCallable, Category="Stamina")
-	void Reset();
-
-
-	UPROPERTY(BlueprintAssignable)
-	FOnAttributeDepletedSignature OnAttributeDepleted;
-
-	UPROPERTY(BlueprintAssignable)
-	FOnAttributeReplenishedSignature OnAttributeReplenished;
-
-	UPROPERTY(BlueprintAssignable)
-	FOnAttributeUpdatedSignature OnAttributeUpdated;
 
 private:
 	void CheckRegen();

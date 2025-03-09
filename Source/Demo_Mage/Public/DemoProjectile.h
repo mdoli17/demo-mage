@@ -33,12 +33,19 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	UFUNCTION(BlueprintCallable, Category="Projectile")
+	void Setup(AActor* InstigatorActor);
+
+	UFUNCTION(BlueprintCallable, Category="Projectile")
 	void Launch(const FVector& Direction) const;
 
 protected:
 	UFUNCTION()
 	void ProjectileHitHandler(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
-	UFUNCTION(BlueprintImplementableEvent, Category="Projectile")
+	UFUNCTION(BlueprintNativeEvent, Category="Projectile")
 	void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	virtual void OnProjectileHit_Implementation(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+
+	TSoftObjectPtr<AActor> Instigator;
 };

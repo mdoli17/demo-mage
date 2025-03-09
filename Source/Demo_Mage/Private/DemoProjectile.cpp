@@ -41,6 +41,11 @@ void ADemoProjectile::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 }
 
+void ADemoProjectile::Setup(AActor* InstigatorActor)
+{
+	Instigator = InstigatorActor;
+}
+
 void ADemoProjectile::Launch(const FVector& Direction) const
 {
 	ProjectileMovementComponent->Velocity = Direction * ProjectileMovementComponent->InitialSpeed;
@@ -48,9 +53,13 @@ void ADemoProjectile::Launch(const FVector& Direction) const
 
 void ADemoProjectile::ProjectileHitHandler(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor == this) return;
+	if (OtherActor == Instigator) return;
 
 	OnProjectileHit(HitComponent, OtherActor, OtherComponent, NormalImpulse, Hit);
 
 	Destroy();
+}
+
+void ADemoProjectile::OnProjectileHit_Implementation(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
 }

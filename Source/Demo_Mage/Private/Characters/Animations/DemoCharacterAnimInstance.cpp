@@ -33,6 +33,17 @@ void UDemoCharacterAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 bool UDemoCharacterAnimInstance::HandleNotify(const FAnimNotifyEvent& AnimNotifyEvent)
 {
 	UE_LOG(LogTemp, Log, TEXT("Notify Name: %s"), *AnimNotifyEvent.NotifyName.ToString());
-	OnBasicAttackReady.Broadcast();
+
+	// TODO: Maybe it will be better to implement Custom Notifies, and broadcast events from there.
+	if (AnimNotifyEvent.NotifyName == BasicAttackReadyNotifyName)
+	{
+		OnBasicAttackReady.Broadcast();
+	}
+
+	if (AnimNotifyEvent.NotifyName == AbilityReadyNotifyName)
+	{
+		OnAbilityReady.Broadcast();
+	}
+
 	return Super::HandleNotify(AnimNotifyEvent);
 }

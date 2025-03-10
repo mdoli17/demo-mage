@@ -49,6 +49,11 @@ public:
 		bIsUsingAbility = false;
 	}
 
+	virtual FOnAbilityReady& GetAbilityReadyEvent() override
+	{
+		return OnAbilityReady;
+	}
+
 protected:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
@@ -74,8 +79,17 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	ECharacterAbilityType CurrentAbility;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Animation Events")
+	FName BasicAttackReadyNotifyName;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Animation Events")
+	FName AbilityReadyNotifyName;
+
 	UPROPERTY()
 	FOnBasicAttackReady OnBasicAttackReady;
+
+	UPROPERTY()
+	FOnAbilityReady OnAbilityReady;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Basic Attack")
 	FName ProjectileSocketName;

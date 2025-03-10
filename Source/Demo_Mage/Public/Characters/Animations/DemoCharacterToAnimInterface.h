@@ -9,6 +9,8 @@
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBasicAttackReady);
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAbilityReady);
+
 
 // This class does not need to be modified.
 UINTERFACE(NotBlueprintable)
@@ -43,4 +45,6 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	virtual void StopAbility() = 0;
+
+	virtual FOnAbilityReady& GetAbilityReadyEvent() = 0;
 };

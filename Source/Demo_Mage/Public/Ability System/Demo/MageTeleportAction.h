@@ -31,13 +31,23 @@ protected:
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 
 private:
-	UPROPERTY()
 	TArray<AActor*> ActorsToIgnoreDuringTrace;
+	AActor* InitialTarget;
+	AActor* FinalTarget;
+
+	UFUNCTION()
+	void AbilityReadyCallback();
 
 	bool SetupInitialTarget();
-	void SetupFinalTarget();
-	void Teleport();
-	void SphereTrace(FHitResult& Hit);
+	bool SetupFinalTarget();
+	void TeleportTargets() const;
+	void SphereTrace(FHitResult& Hit) const;
+
+	void ResetTargets()
+	{
+		InitialTarget = nullptr;
+		FinalTarget = nullptr;
+	}
 
 protected:
 	// ----------------- DEBUG ---------------- //

@@ -9,11 +9,17 @@ void UMageTeleportAction::Initialize_Implementation()
 {
 	Super::Initialize_Implementation();
 	ActorsToIgnoreDuringTrace.Add(Owner);
+	AnimInterface->GetAbilityReadyEvent().AddDynamic(this, &UMageTeleportAction::UMageTeleportAction::AbilityReadyCallback);
 }
 
 bool UMageTeleportAction::StartActionImplementation_Implementation(const FActionParams& Params)
 {
-	if (const bool TargetFound = SetupInitialTarget(); !TargetFound) return false;
+	if (const bool TargetFound = SetupInitialTarget(); !TargetFound)
+	{
+		// TODO: Play ability start fail animation
+		ResetTargets();
+		return false;
+	}
 
 	AnimInterface->StartAbility();
 	return Super::StartActionImplementation_Implementation(Params);
@@ -21,37 +27,57 @@ bool UMageTeleportAction::StartActionImplementation_Implementation(const FAction
 
 bool UMageTeleportAction::StopActionImplementation_Implementation()
 {
+	if (const bool TargetFound = SetupFinalTarget(); !TargetFound)
+	{
+		// TODO: Play ability stop fail animation
+		ResetTargets();
+		AnimInterface->StopAbility(); // TODO: Remove this after calling ability stop fail animation is implemented.
+		return true; // Returning true so that ability stops.
+	}
+
 	AnimInterface->StopAbility();
-	SetupFinalTarget();
+
 	return Super::StopActionImplementation_Implementation();
+}
+
+void UMageTeleportAction::AbilityReadyCallback()
+{
+	TeleportTargets();
+	ResetTargets();
 }
 
 bool UMageTeleportAction::SetupInitialTarget()
 {
 	FHitResult Hit;
 	SphereTrace(Hit);
-	// Sphere Trace
-	// Get Initial Object or Initial Location
+
+	InitialTarget = Hit.bBlockingHit ? Hit.GetActor() : nullptr;
 
 	return Hit.bBlockingHit;
 }
 
-void UMageTeleportAction::SetupFinalTarget()
+bool UMageTeleportAction::SetupFinalTarget()
 {
 	FHitResult Hit;
 	SphereTrace(Hit);
-	// Sphere Trace
-	// Get Target Object or Target Location
+
+	FinalTarget = Hit.bBlockingHit ? Hit.GetActor() : nullptr;
+
+	return Hit.bBlockingHit && FinalTarget != InitialTarget;
 }
 
-void UMageTeleportAction::Teleport()
+void UMageTeleportAction::TeleportTargets() const
 {
-	// If Initial and Target Objects are valid, swap places
-	// If Initial Target Object is available, teleport to Target Location
-	// If Target Object is available, teleport to Initial Location
+	if (!InitialTarget || !FinalTarget || InitialTarget == FinalTarget) return;
+
+	const FVector InitialPosition = InitialTarget->GetActorLocation();
+	const FVector FinalPosition = FinalTarget->GetActorLocation();
+
+	InitialTarget->SetActorLocation(FinalPosition, false, nullptr, ETeleportType::TeleportPhysics);
+	FinalTarget->SetActorLocation(InitialPosition, false, nullptr, ETeleportType::TeleportPhysics);
 }
 
-void UMageTeleportAction::SphereTrace(FHitResult& Hit)
+void UMageTeleportAction::SphereTrace(FHitResult& Hit) const
 {
 	FVector EyesViewPointLocation;
 	FRotator EyesViewPointRotation;

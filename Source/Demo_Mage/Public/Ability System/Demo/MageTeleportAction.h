@@ -31,6 +31,7 @@ protected:
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 
 private:
+	UPROPERTY()
 	TArray<AActor*> ActorsToIgnoreDuringTrace;
 
 	bool SetupInitialTarget();
@@ -41,14 +42,14 @@ private:
 protected:
 	// ----------------- DEBUG ---------------- //
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	TEnumAsByte<EDrawDebugTrace::Type> TraceDrawDebugType;
+	TEnumAsByte<EDrawDebugTrace::Type> TraceDrawDebugType = EDrawDebugTrace::Type::None;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	FLinearColor TraceColor;
+	FLinearColor TraceColor = FLinearColor::White;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	FLinearColor TraceHitColor;
+	FLinearColor TraceHitColor = FLinearColor::Green;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	float TraceDrawTime;
+	float TraceDrawTime = 1.5f;
 };

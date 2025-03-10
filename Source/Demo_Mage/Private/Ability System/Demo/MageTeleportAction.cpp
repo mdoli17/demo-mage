@@ -29,9 +29,8 @@ bool UMageTeleportAction::StopActionImplementation_Implementation()
 {
 	if (const bool TargetFound = SetupFinalTarget(); !TargetFound)
 	{
-		// TODO: Play ability stop fail animation
 		ResetTargets();
-		AnimInterface->StopAbility(); // TODO: Remove this after calling ability stop fail animation is implemented.
+		AnimInterface->StopAbility(false);
 		return true; // Returning true so that ability stops.
 	}
 

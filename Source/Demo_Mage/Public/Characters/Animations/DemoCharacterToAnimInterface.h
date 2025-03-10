@@ -44,7 +44,7 @@ public:
 	virtual void StartAbility() = 0;
 
 	UFUNCTION(BlueprintCallable)
-	virtual void StopAbility() = 0;
+	virtual void StopAbility(bool WasSuccessful = true) = 0;
 
 	virtual FOnAbilityReady& GetAbilityReadyEvent() = 0;
 };

@@ -44,9 +44,10 @@ public:
 		bIsUsingAbility = true;
 	}
 
-	virtual void StopAbility() override
+	virtual void StopAbility(const bool WasSuccessful = true) override
 	{
 		bIsUsingAbility = false;
+		bAbilitySucceeded = WasSuccessful;
 	}
 
 	virtual FOnAbilityReady& GetAbilityReadyEvent() override
@@ -75,6 +76,9 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	bool bIsUsingAbility;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
+	bool bAbilitySucceeded;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	ECharacterAbilityType CurrentAbility;

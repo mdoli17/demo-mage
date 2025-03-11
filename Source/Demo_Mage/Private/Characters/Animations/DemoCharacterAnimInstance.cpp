@@ -34,16 +34,8 @@ bool UDemoCharacterAnimInstance::HandleNotify(const FAnimNotifyEvent& AnimNotify
 {
 	UE_LOG(LogTemp, Log, TEXT("Notify Name: %s"), *AnimNotifyEvent.NotifyName.ToString());
 
-	// TODO: Maybe it will be better to implement Custom Notifies, and broadcast events from there.
-	if (AnimNotifyEvent.NotifyName == BasicAttackReadyNotifyName)
-	{
-		OnBasicAttackReady.Broadcast();
-	}
-
-	if (AnimNotifyEvent.NotifyName == AbilityReadyNotifyName)
-	{
-		OnAbilityReady.Broadcast();
-	}
+	// TODO: Maybe it will be better to implement Custom Notifies, and broadcast events or call direct functions of actions from there.
+	OnAnimNotifyEventReceived.Broadcast(AnimNotifyEvent);
 
 	return Super::HandleNotify(AnimNotifyEvent);
 }

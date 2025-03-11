@@ -7,9 +7,7 @@
 #include "Ability System/Demo/ECharacterAbilityType.h"
 #include "DemoCharacterToAnimInterface.generated.h"
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnBasicAttackReady);
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnAbilityReady);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnAnimNotifyEventReceived, const FAnimNotifyEvent&, AnimNotifyEvent);
 
 
 // This class does not need to be modified.
@@ -33,8 +31,6 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void StopBasicAttack() = 0;
 
-	virtual FOnBasicAttackReady& GetBasicAttackReadyEvent() = 0;
-
 	UFUNCTION(BlueprintCallable)
 	virtual FVector GetProjectileSpawnLocation() = 0;
 
@@ -46,5 +42,5 @@ public:
 	UFUNCTION(BlueprintCallable)
 	virtual void StopAbility(bool WasSuccessful = true) = 0;
 
-	virtual FOnAbilityReady& GetAbilityReadyEvent() = 0;
+	virtual FOnAnimNotifyEventReceived& GetAnimNotifyEventReceived() = 0;
 };

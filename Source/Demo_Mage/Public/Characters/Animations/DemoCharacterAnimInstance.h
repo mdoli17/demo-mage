@@ -27,11 +27,6 @@ public:
 		bIsAttacking = false;
 	}
 
-	virtual FOnBasicAttackReady& GetBasicAttackReadyEvent() override
-	{
-		return OnBasicAttackReady;
-	}
-
 	virtual FVector GetProjectileSpawnLocation() override;
 
 	virtual void SetAbilityType(const ECharacterAbilityType AbilityType) override
@@ -50,9 +45,9 @@ public:
 		bAbilitySucceeded = WasSuccessful;
 	}
 
-	virtual FOnAbilityReady& GetAbilityReadyEvent() override
+	virtual FOnAnimNotifyEventReceived& GetAnimNotifyEventReceived() override
 	{
-		return OnAbilityReady;
+		return OnAnimNotifyEventReceived;
 	}
 
 protected:
@@ -83,17 +78,8 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Combat")
 	ECharacterAbilityType CurrentAbility;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Animation Events")
-	FName BasicAttackReadyNotifyName;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Animation Events")
-	FName AbilityReadyNotifyName;
-
 	UPROPERTY()
-	FOnBasicAttackReady OnBasicAttackReady;
-
-	UPROPERTY()
-	FOnAbilityReady OnAbilityReady;
+	FOnAnimNotifyEventReceived OnAnimNotifyEventReceived;
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Basic Attack")
 	FName ProjectileSocketName;

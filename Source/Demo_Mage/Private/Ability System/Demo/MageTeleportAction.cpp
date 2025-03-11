@@ -9,14 +9,15 @@ void UMageTeleportAction::Initialize_Implementation()
 {
 	Super::Initialize_Implementation();
 	ActorsToIgnoreDuringTrace.Add(Owner);
-	AnimInterface->GetAbilityReadyEvent().AddDynamic(this, &UMageTeleportAction::UMageTeleportAction::AbilityReadyCallback);
+
+	AnimInterface->GetAnimNotifyEventReceived().AddDynamic(this, &UMageTeleportAction::AnimNotifyEventReceivedHandler);
 }
 
 bool UMageTeleportAction::StartActionImplementation_Implementation(const FActionParams& Params)
 {
 	if (const bool TargetFound = SetupInitialTarget(); !TargetFound)
 	{
-		// TODO: Play ability start fail animation
+		// TODO: Handle fail effects.
 		ResetTargets();
 		return false;
 	}
@@ -41,6 +42,14 @@ bool UMageTeleportAction::StopActionImplementation_Implementation()
 
 void UMageTeleportAction::AbilityReadyCallback()
 {
+	TeleportTargets();
+	ResetTargets();
+}
+
+void UMageTeleportAction::AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent)
+{
+	if (AnimNotifyEvent.NotifyName != AnimNotifyName) return;
+
 	TeleportTargets();
 	ResetTargets();
 }

@@ -21,11 +21,16 @@ public:
 	virtual bool StartActionImplementation_Implementation(const FActionParams& Params) override;
 	virtual bool StopActionImplementation_Implementation() override;
 
+	void LaunchProjectile() const;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Basic Attack")
 	TSubclassOf<ADemoProjectile> ProjectileClass;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Basic Attack")
+	FName AnimNotifyName;
+
 private:
 	UFUNCTION()
-	void BasicAttackActionReadyCallback();
+	void AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent);
 };

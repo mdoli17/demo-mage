@@ -20,6 +20,8 @@ public:
 	virtual bool StartActionImplementation_Implementation(const FActionParams& Params) override;
 	virtual bool StopActionImplementation_Implementation() override;
 
+	void TeleportTargets() const;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	float MaxVisionDistance = 1000.f;
@@ -30,6 +32,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
+	FName AnimNotifyName;
+
 private:
 	TArray<AActor*> ActorsToIgnoreDuringTrace;
 	AActor* InitialTarget;
@@ -38,9 +43,12 @@ private:
 	UFUNCTION()
 	void AbilityReadyCallback();
 
+	UFUNCTION()
+	void AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent);
+
 	bool SetupInitialTarget();
 	bool SetupFinalTarget();
-	void TeleportTargets() const;
+
 	void SphereTrace(FHitResult& Hit) const;
 
 	void ResetTargets()

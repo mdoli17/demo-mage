@@ -9,7 +9,7 @@ void USpawnProjectileAction::Initialize_Implementation()
 {
 	Super::Initialize_Implementation();
 
-	AnimInterface->GetBasicAttackReadyEvent().AddDynamic(this, &USpawnProjectileAction::USpawnProjectileAction::BasicAttackActionReadyCallback);
+	AnimInterface->GetAnimNotifyEventReceived().AddDynamic(this, &USpawnProjectileAction::AnimNotifyEventReceivedHandler);
 	// TODO: Handle un-subscribe in Deinitialize (When it is implemented)
 }
 
@@ -25,7 +25,7 @@ bool USpawnProjectileAction::StopActionImplementation_Implementation()
 	return Super::StopActionImplementation_Implementation();
 }
 
-void USpawnProjectileAction::BasicAttackActionReadyCallback()
+void USpawnProjectileAction::LaunchProjectile() const
 {
 	FHitResult HitResult;
 	FVector ActorEyeViewPointLocation;
@@ -46,11 +46,15 @@ void USpawnProjectileAction::BasicAttackActionReadyCallback()
 	FActorSpawnParameters Parameters;
 	Parameters.Instigator = DemoCharacter;
 
-	ADemoProjectile* Projectile = GetWorld()->SpawnActor<ADemoProjectile>(ProjectileClass, SpawnPoint, SpawnRotator, Parameters);
-	if (Projectile)
+	if (ADemoProjectile* Projectile = GetWorld()->SpawnActor<ADemoProjectile>(ProjectileClass, SpawnPoint, SpawnRotator, Parameters))
 	{
 		Projectile->Launch(ProjectileDirection);
 	}
+}
 
-	UE_LOG(LogTemp, Log, TEXT("Called Basic Attack Action Ready Callback"));
+void USpawnProjectileAction::AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent)
+{
+	if (AnimNotifyEvent.NotifyName != AnimNotifyName) return;
+
+	LaunchProjectile();
 }

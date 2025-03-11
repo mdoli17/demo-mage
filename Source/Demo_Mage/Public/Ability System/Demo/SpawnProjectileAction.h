@@ -31,6 +31,7 @@ protected:
 	FName AnimNotifyName;
 
 private:
+	// TODO: Boiler-plate code, can be refactored by deriving from DemoCharacterAbilityAction which will handle basic repetitive things
 	UFUNCTION()
 	void AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent);
 };

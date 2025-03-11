@@ -40,12 +40,6 @@ bool UMageTeleportAction::StopActionImplementation_Implementation()
 	return Super::StopActionImplementation_Implementation();
 }
 
-void UMageTeleportAction::AbilityReadyCallback()
-{
-	TeleportTargets();
-	ResetTargets();
-}
-
 void UMageTeleportAction::AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent)
 {
 	if (AnimNotifyEvent.NotifyName != AnimNotifyName) return;

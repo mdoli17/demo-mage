@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "DemoAbilityAction.h"
 #include "Kismet/KismetSystemLibrary.h"
-#include "MageTeleportAction.generated.h"
+#include "MageHealAction.generated.h"
 
 /**
- * 
+ * Ability which adds health to any target which inherits IHealthComponentProvider.
+ * (In the future, maybe improve this ability, by damaging enemies, and healing allies)
  */
 UCLASS()
-class DEMO_MAGE_API UMageTeleportAction : public UDemoAbilityAction
+class DEMO_MAGE_API UMageHealAction : public UDemoAbilityAction
 {
 	GENERATED_BODY()
 
@@ -20,39 +21,37 @@ public:
 	virtual bool StartActionImplementation_Implementation(const FActionParams& Params) override;
 	virtual bool StopActionImplementation_Implementation() override;
 
-	void TeleportTargets() const;
+	void Heal();
 
 protected:
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
-	float MaxVisionDistance = 1000.f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
+	float HealAmount;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
-	float SphereTraceRadius = 250.f;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
+	float MaxVisionDistance;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
+	float SphereTraceRadius;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
 	FName AnimNotifyName;
 
 private:
+	IHealthComponentProvider* HealthComponentProvider;
 	TArray<AActor*> ActorsToIgnoreDuringTrace;
-	AActor* InitialTarget;
-	AActor* FinalTarget;
 
 	// TODO: Boiler-plate code, can be refactored by deriving from DemoCharacterAbilityAction which will handle basic repetitive things
 	UFUNCTION()
 	void AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent);
 
-	bool SetupInitialTarget();
-	bool SetupFinalTarget();
+	bool SetupTarget();
 
-	void SphereTrace(FHitResult& Hit) const;
-
-	void ResetTargets()
+	void ResetTarget()
 	{
-		InitialTarget = nullptr;
-		FinalTarget = nullptr;
+		HealthComponentProvider = nullptr;
 	}
 
 protected:

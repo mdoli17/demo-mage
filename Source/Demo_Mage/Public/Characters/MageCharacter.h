@@ -31,6 +31,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual FVector GetPawnViewLocation() const override
+	{
+		return CameraComponent->GetComponentLocation();
+	}
+
 	virtual USkeletalMeshComponent* GetSkeletalMesh() const override
 	{
 		return SkeletalMeshComponent;
@@ -74,7 +79,7 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<USkeletalMeshComponent> SkeletalMeshComponent;
 
-	
+
 	UFUNCTION()
 	void MoveInputCallback(const FInputActionValue& Value);
 

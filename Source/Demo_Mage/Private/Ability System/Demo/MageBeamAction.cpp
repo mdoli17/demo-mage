@@ -14,14 +14,12 @@ void UMageBeamAction::Initialize_Implementation()
 
 bool UMageBeamAction::StartActionImplementation_Implementation(const FActionParams& Params)
 {
-	bIsReadyToCast = true;
 	AnimInterface->StartAbility();
 	return true;
 }
 
 bool UMageBeamAction::StopActionImplementation_Implementation()
 {
-	bIsReadyToCast = false;
 	AnimInterface->StopAbility(true);
 	return true;
 }
@@ -71,11 +69,15 @@ void UMageBeamAction::AnimNotifyEventReceiveHandler(const FAnimNotifyEvent& Anim
 {
 	if (AnimNotifyEvent.NotifyName == ReadyToCastAnimNotifyName)
 	{
-		StartDealingDamage();
+		bIsReadyToCast = true;
+		// Calling on next tick to ensure references are updated
+		GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UMageBeamAction::StartDealingDamage);
 	}
 	if (AnimNotifyEvent.NotifyName == FinishedCastingAnimNotifyName)
 	{
-		StopDealingDamage();
+		bIsReadyToCast = false;
+		// Calling on next tick to ensure references are updated
+		GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UMageBeamAction::StopDealingDamage);
 	}
 }
 

@@ -44,7 +44,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
-	float HealAmount;
+	float DamageOverTime;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
 	float MaxVisionDistance;
@@ -63,12 +63,21 @@ protected:
 
 private:
 	TArray<AActor*> ActorsToIngoreDuringTrace;
-	UHealthComponentProvider* HealthComponentProvider;
+
+	UPROPERTY()
+	AActor* TracedActor;
+
+	IHealthComponentProvider* HealthComponentProvider;
+
 	uint32 LastFrameNumberTicked = -1;
 	bool bIsReadyToCast = false;
 
 	UFUNCTION()
-	void AnimNotifyEventRecieveHandler(const FAnimNotifyEvent& AnimNotifyEvent);
+	void AnimNotifyEventReceiveHandler(const FAnimNotifyEvent& AnimNotifyEvent);
+
+	void StartDealingDamage();
+	void StopDealingDamage();
+	void SwitchDealingDamage(IHealthComponentProvider* OldHealthComponentProvider);
 
 protected:
 	// ----------------- DEBUG ---------------- //

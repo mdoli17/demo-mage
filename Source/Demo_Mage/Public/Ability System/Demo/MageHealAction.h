@@ -33,7 +33,7 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
 	float SphereTraceRadius;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
@@ -56,15 +56,15 @@ private:
 
 protected:
 	// ----------------- DEBUG ---------------- //
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Heal/Debug")
 	TEnumAsByte<EDrawDebugTrace::Type> TraceDrawDebugType = EDrawDebugTrace::Type::None;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Heal/Debug")
 	FLinearColor TraceColor = FLinearColor::White;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Heal/Debug")
 	FLinearColor TraceHitColor = FLinearColor::Green;
 
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Heal/Debug")
 	float TraceDrawTime = 1.5f;
 };

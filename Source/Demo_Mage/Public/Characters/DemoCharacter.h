@@ -41,6 +41,7 @@ public:
 		return HealthComponent;
 	}
 
+	UFUNCTION(BlueprintCallable, Category="Demo Character")
 	virtual USkeletalMeshComponent* GetSkeletalMesh() const
 	{
 		return GetMesh();

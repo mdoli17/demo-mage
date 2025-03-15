@@ -13,7 +13,8 @@ void UMageHealAction::Initialize_Implementation()
 bool UMageHealAction::StartActionImplementation_Implementation(const FActionParams& Params)
 {
 	AnimInterface->StartAbility();
-	return Super::StartActionImplementation_Implementation(Params);
+	OnCastStarted();
+	return true;
 }
 
 bool UMageHealAction::StopActionImplementation_Implementation()
@@ -21,11 +22,13 @@ bool UMageHealAction::StopActionImplementation_Implementation()
 	if (!SetupTarget())
 	{
 		AnimInterface->StopAbility(false);
+		OnCastFailed();
 		return true;
 	}
 
 	AnimInterface->StopAbility();
-	return Super::StopActionImplementation_Implementation();
+	OnCastSucceeded();
+	return true;
 }
 
 void UMageHealAction::Heal()

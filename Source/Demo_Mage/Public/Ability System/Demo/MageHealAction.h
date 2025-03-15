@@ -39,6 +39,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Heal")
 	FName AnimNotifyName;
 
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Heal")
+	void OnCastStarted();
+
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Heal")
+	void OnCastSucceeded();
+
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Heal")
+	void OnCastFailed();
+
 private:
 	IHealthComponentProvider* HealthComponentProvider;
 	TArray<AActor*> ActorsToIgnoreDuringTrace;

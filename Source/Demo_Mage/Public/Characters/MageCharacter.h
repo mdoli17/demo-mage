@@ -35,7 +35,7 @@ public:
 	{
 		return CameraComponent->GetComponentLocation();
 	}
-
+	
 	virtual USkeletalMeshComponent* GetSkeletalMesh() const override
 	{
 		return SkeletalMeshComponent;

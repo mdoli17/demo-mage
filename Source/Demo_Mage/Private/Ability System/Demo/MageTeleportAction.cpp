@@ -23,6 +23,7 @@ bool UMageTeleportAction::StartActionImplementation_Implementation(const FAction
 	}
 
 	AnimInterface->StartAbility();
+	OnCastStarted();
 	return Super::StartActionImplementation_Implementation(Params);
 }
 
@@ -32,11 +33,12 @@ bool UMageTeleportAction::StopActionImplementation_Implementation()
 	{
 		ResetTargets();
 		AnimInterface->StopAbility(false);
+		OnCastFailed();
 		return true; // Returning true so that ability stops.
 	}
 
 	AnimInterface->StopAbility();
-
+	OnCastSucceeded();
 	return Super::StopActionImplementation_Implementation();
 }
 

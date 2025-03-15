@@ -35,6 +35,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	FName AnimNotifyName;
 
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Teleport")
+	void OnCastStarted();
+
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Teleport")
+	void OnCastSucceeded();
+
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Teleport")
+	void OnCastFailed();
+
 private:
 	TArray<AActor*> ActorsToIgnoreDuringTrace;
 	AActor* InitialTarget;

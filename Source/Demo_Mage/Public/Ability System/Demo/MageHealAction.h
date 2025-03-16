@@ -43,12 +43,13 @@ protected:
 	void OnCastStarted();
 
 	UFUNCTION(BlueprintImplementableEvent, Category="Mage Heal")
-	void OnCastSucceeded();
+	void OnCastSucceeded(AActor* Target);
 
 	UFUNCTION(BlueprintImplementableEvent, Category="Mage Heal")
 	void OnCastFailed();
 
 private:
+	AActor* TargetActor;
 	IHealthComponentProvider* HealthComponentProvider;
 	TArray<AActor*> ActorsToIgnoreDuringTrace;
 
@@ -60,6 +61,7 @@ private:
 
 	void ResetTarget()
 	{
+		TargetActor = nullptr;
 		HealthComponentProvider = nullptr;
 	}
 

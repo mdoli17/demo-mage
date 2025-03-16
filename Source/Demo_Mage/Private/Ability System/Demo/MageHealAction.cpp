@@ -27,7 +27,7 @@ bool UMageHealAction::StopActionImplementation_Implementation()
 	}
 
 	AnimInterface->StopAbility();
-	OnCastSucceeded();
+	OnCastSucceeded(TargetActor);
 	return true;
 }
 
@@ -66,6 +66,7 @@ bool UMageHealAction::SetupTarget()
 	AActor* HitActor = Hit.GetActor();
 	if (!HitActor->Implements<UHealthComponentProvider>()) return false;
 
+	TargetActor = HitActor;
 	HealthComponentProvider = Cast<IHealthComponentProvider>(HitActor);
 
 	return true;

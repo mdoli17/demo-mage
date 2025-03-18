@@ -61,6 +61,15 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
 	FName FinishedCastingAnimNotifyName;
 
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Beam")
+	void OnCastStarted();
+
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Beam")
+	void OnCastEnded();
+
+	UFUNCTION(BlueprintImplementableEvent, Category="Mage Beam")
+	void OnHitUpdated(const FHitResult& Hit);
+
 private:
 	TArray<AActor*> ActorsToIngoreDuringTrace;
 

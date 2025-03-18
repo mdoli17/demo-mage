@@ -56,6 +56,8 @@ void UMageBeamAction::Tick(float DeltaTime)
 				}
 				SwitchDealingDamage(OldHealthComponentProvider);
 			}
+
+			OnHitUpdated(Hit);
 		}
 		else
 		{
@@ -83,6 +85,8 @@ void UMageBeamAction::AnimNotifyEventReceiveHandler(const FAnimNotifyEvent& Anim
 
 void UMageBeamAction::StartDealingDamage()
 {
+	OnCastStarted();
+
 	if (!HealthComponentProvider) return;
 
 	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();
@@ -93,6 +97,8 @@ void UMageBeamAction::StartDealingDamage()
 
 void UMageBeamAction::StopDealingDamage()
 {
+	OnCastEnded();
+
 	if (!HealthComponentProvider) return;
 
 	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();

@@ -38,6 +38,7 @@ void UMageBeamAction::Tick(float DeltaTime)
 		FHitResult Hit;
 		UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(), TraceStart, TraceEnd, SphereTraceRadius, TraceObjectTypes, false, ActorsToIngoreDuringTrace, TraceDrawDebugType, Hit, true,
 		                                                  TraceColor, TraceHitColor, TraceDrawTime);
+		OnHitUpdated(Hit);
 
 		if (Hit.bBlockingHit)
 		{
@@ -56,8 +57,6 @@ void UMageBeamAction::Tick(float DeltaTime)
 				}
 				SwitchDealingDamage(OldHealthComponentProvider);
 			}
-
-			OnHitUpdated(Hit);
 		}
 		else
 		{

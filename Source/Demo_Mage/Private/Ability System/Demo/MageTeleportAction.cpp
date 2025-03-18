@@ -31,14 +31,13 @@ bool UMageTeleportAction::StopActionImplementation_Implementation()
 {
 	if (const bool TargetFound = SetupFinalTarget(); !TargetFound)
 	{
-		ResetTargets();
 		AnimInterface->StopAbility(false);
 		OnCastFailed();
+		ResetTargets();
 		return true; // Returning true so that ability stops.
 	}
 
 	AnimInterface->StopAbility();
-	OnCastSucceeded();
 	return Super::StopActionImplementation_Implementation();
 }
 
@@ -70,9 +69,11 @@ bool UMageTeleportAction::SetupFinalTarget()
 	return Hit.bBlockingHit && FinalTarget != InitialTarget;
 }
 
-void UMageTeleportAction::TeleportTargets() const
+void UMageTeleportAction::TeleportTargets()
 {
 	if (!InitialTarget || !FinalTarget || InitialTarget == FinalTarget) return;
+
+	OnCastSucceeded(InitialTarget, FinalTarget);
 
 	const FVector InitialPosition = InitialTarget->GetActorLocation();
 	const FVector FinalPosition = FinalTarget->GetActorLocation();

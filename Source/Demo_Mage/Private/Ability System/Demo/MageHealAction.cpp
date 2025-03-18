@@ -27,7 +27,6 @@ bool UMageHealAction::StopActionImplementation_Implementation()
 	}
 
 	AnimInterface->StopAbility();
-	OnCastSucceeded(TargetActor);
 	return true;
 }
 
@@ -39,6 +38,7 @@ void UMageHealAction::Heal()
 	if (!HealthComponent) return;
 
 	HealthComponent->SingleUse(HealAmount);
+	OnCastSucceeded(TargetActor);
 }
 
 void UMageHealAction::AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent)

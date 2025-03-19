@@ -19,6 +19,7 @@ ADemoProjectile::ADemoProjectile()
 
 	SphereComponent->SetupAttachment(RootComponent);
 
+	SphereComponent->OnComponentBeginOverlap.RemoveAll(this);
 	SphereComponent->OnComponentBeginOverlap.AddDynamic(this, &ADemoProjectile::ProjectileOverlapBeginHandler);
 
 	ProjectileMovementComponent->SetUpdatedComponent(SphereComponent);

@@ -38,7 +38,7 @@ void USpawnProjectileAction::LaunchProjectile()
 
 	const FVector ProjectileDestination = HitResult.bBlockingHit ? HitResult.Location : LineEnd;
 
-	DrawDebugLine(GetWorld(), LineStart, ProjectileDestination, HitResult.bBlockingHit ? FColor::Green : FColor::Orange, false, 5.0f);
+	// DrawDebugLine(GetWorld(), LineStart, ProjectileDestination, HitResult.bBlockingHit ? FColor::Green : FColor::Orange, false, 5.0f);
 
 	const FVector SpawnPoint = AnimInterface->GetProjectileSpawnLocation();
 	const FRotator SpawnRotator = FRotator::ZeroRotator;

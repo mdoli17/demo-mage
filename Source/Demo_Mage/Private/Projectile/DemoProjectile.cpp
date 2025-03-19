@@ -53,8 +53,6 @@ void ADemoProjectile::ProjectileOverlapBeginHandler(UPrimitiveComponent* Overlap
 	if (OtherActor == GetInstigator()) return;
 
 	OnProjectileBeginOverlap(OverlappedComponent, OtherActor, OtherComp, OtherBodyIndex, bFromSweep, SweepResult);
-
-	Destroy();
 }
 
 void ADemoProjectile::OnProjectileBeginOverlap_Implementation(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep,

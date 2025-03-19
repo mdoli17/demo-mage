@@ -25,7 +25,7 @@ bool USpawnProjectileAction::StopActionImplementation_Implementation()
 	return Super::StopActionImplementation_Implementation();
 }
 
-void USpawnProjectileAction::LaunchProjectile() const
+void USpawnProjectileAction::LaunchProjectile()
 {
 	FHitResult HitResult;
 	FVector ActorEyeViewPointLocation;
@@ -50,6 +50,8 @@ void USpawnProjectileAction::LaunchProjectile() const
 	{
 		Projectile->Launch(ProjectileDirection);
 	}
+
+	OnSpawnCalled();
 }
 
 void USpawnProjectileAction::AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent)

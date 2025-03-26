@@ -51,6 +51,7 @@ void UAttributeComponent::SingleUse_Implementation(const float Amount)
 	const float OldValue = CurrentValue;
 	CurrentValue = FMath::Max(CurrentValue - Amount, 0.0f);
 	OnAttributeUpdated.Broadcast(OldValue, CurrentValue, MaxValue);
+	if (CurrentValue == 0) HandleAttributeDepletion();
 	CheckRegen();
 }
 

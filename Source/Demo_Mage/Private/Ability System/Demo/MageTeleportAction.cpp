@@ -64,9 +64,10 @@ bool UMageTeleportAction::SetupFinalTarget()
 	FHitResult Hit;
 	SphereTrace(Hit);
 
-	FinalTarget = Hit.bBlockingHit ? Hit.GetActor() : nullptr;
 
-	return Hit.bBlockingHit && FinalTarget != InitialTarget;
+	FinalTarget = Hit.bBlockingHit ? (Hit.GetActor() != InitialTarget ? Hit.GetActor() : DemoCharacter) : DemoCharacter;
+
+	return true;
 }
 
 void UMageTeleportAction::TeleportTargets()

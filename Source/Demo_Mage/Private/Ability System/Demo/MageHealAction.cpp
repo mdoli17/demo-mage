@@ -41,6 +41,11 @@ void UMageHealAction::Heal()
 	OnCastSucceeded(TargetActor);
 }
 
+bool UMageHealAction::CanBeHealed_Implementation(AActor* Actor)
+{
+	return true;
+}
+
 void UMageHealAction::AnimNotifyEventReceivedHandler(const FAnimNotifyEvent& AnimNotifyEvent)
 {
 	if (AnimNotifyEvent.NotifyName != AnimNotifyName) return;
@@ -69,5 +74,5 @@ bool UMageHealAction::SetupTarget()
 	TargetActor = HitActor;
 	HealthComponentProvider = Cast<IHealthComponentProvider>(HitActor);
 
-	return true;
+	return CanBeHealed(HitActor);
 }

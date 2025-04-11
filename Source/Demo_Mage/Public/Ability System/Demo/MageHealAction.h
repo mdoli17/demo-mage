@@ -48,6 +48,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category="Mage Heal")
 	void OnCastFailed();
 
+	UFUNCTION(BlueprintNativeEvent, Category="Mage Heal")
+	bool CanBeHealed(AActor* Actor);
+
 private:
 	AActor* TargetActor;
 	IHealthComponentProvider* HealthComponentProvider;

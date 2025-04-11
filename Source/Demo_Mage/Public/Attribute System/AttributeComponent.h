@@ -52,6 +52,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attribute")
 	float MaxValue = 100.f;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Attribute")
+	float InitialValue = 100.f;
+
 	UPROPERTY(VisibleInstanceOnly, BlueprintReadOnly, Category = "Attribute")
 	float CurrentValue = 100.f;
 

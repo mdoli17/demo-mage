@@ -18,6 +18,8 @@ ADemoCharacter::ADemoCharacter()
 void ADemoCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	HealthComponent->OnAttributeDepleted.AddDynamic(this, &ADemoCharacter::HealthDepleteHandler);
 }
 
 // Called every frame
@@ -45,4 +47,13 @@ bool ADemoCharacter::GetIsSprinting()
 bool ADemoCharacter::GetIsInAir()
 {
 	return GetMovementComponent()->IsFalling();
+}
+
+void ADemoCharacter::RespawnCharacter()
+{
+}
+
+void ADemoCharacter::HealthDepleteHandler()
+{
+	OnDeathDelegate.Broadcast();
 }

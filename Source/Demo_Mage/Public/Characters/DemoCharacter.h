@@ -10,6 +10,8 @@
 #include "Attribute System/HealthComponentProvider.h"
 #include "DemoCharacter.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnDeath);
+
 UCLASS()
 class DEMO_MAGE_API ADemoCharacter : public ACharacter, public IDemoCharacterAnimInterface, public IHealthComponentProvider
 {
@@ -47,6 +49,10 @@ public:
 		return GetMesh();
 	}
 
+	virtual void RespawnCharacter();
+
+	FOnDeath OnDeathDelegate;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Demo Character")
 	float WalkSpeed = 250.f;
@@ -59,4 +65,7 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<UAttributeComponent> HealthComponent;
+
+	UFUNCTION()
+	virtual void HealthDepleteHandler();
 };

@@ -23,7 +23,7 @@ public:
 	bool CanStartAction();
 
 	UFUNCTION(BlueprintCallable, Category="Action")
-	virtual bool StartAction(const FActionParams& Params);
+	virtual bool StartAction(const FActionParams& Params); // TODO: This shouldn't be virtual, It contains necessary behaviour which should be executed when starting. 
 
 	UFUNCTION(BlueprintCallable, Category="Action")
 	bool StopAction();

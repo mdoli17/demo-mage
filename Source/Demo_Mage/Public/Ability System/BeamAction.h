@@ -44,6 +44,21 @@ protected:
 	virtual bool StartActionImplementation_Implementation(const FActionParams& Params) override;
 	virtual bool StopActionImplementation_Implementation() override;
 
+	virtual void StartHandlingBeamForActor(AActor* Actor)
+	{
+	}
+
+	virtual void UpdateHandlingBeamForActor(AActor* Actor)
+	{
+	}
+
+	virtual void StopHandlingBeamForActor(AActor* Actor)
+	{
+	}
+
+	UFUNCTION(BlueprintImplementableEvent, Category="Beam")
+	void OnHitUpdated(const FHitResult& Hit);
+
 	UFUNCTION(BlueprintNativeEvent, Category="Beam")
 	FVector GetTraceStart();
 
@@ -55,6 +70,8 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beam")
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
+
+	bool bCanBeam;
 
 	// ----------------- DEBUG ---------------- //
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debug")
@@ -70,8 +87,6 @@ protected:
 	float TraceDrawTime = 1.5f;
 
 private:
-	bool bCanBeam;
-
 	TArray<AActor*> ActorsToIngoreDuringTrace;
 
 	AActor* TracedActor;

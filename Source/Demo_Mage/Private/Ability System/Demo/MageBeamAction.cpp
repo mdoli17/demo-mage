@@ -7,8 +7,11 @@ void UMageBeamAction::Initialize_Implementation()
 {
 	Super::Initialize_Implementation();
 
+	AnimInterface = Cast<IDemoCharacterToAnimInterface>(DemoCharacter->GetSkeletalMesh()->GetAnimInstance());
+	ensure(AnimInterface);
+	Super::Initialize_Implementation();
+
 	AnimInterface->GetAnimNotifyEventReceived().AddDynamic(this, &UMageBeamAction::AnimNotifyEventReceiveHandler);
-	ActorsToIngoreDuringTrace.Add(Owner);
 }
 
 
@@ -24,101 +27,48 @@ bool UMageBeamAction::StopActionImplementation_Implementation()
 	return true;
 }
 
-void UMageBeamAction::Tick(float DeltaTime)
+void UMageBeamAction::StartHandlingBeamForActor(AActor* Actor)
 {
-	if (bIsReadyToCast) // Can sphere cast
-	{
-		FVector EyeViewPointLocation;
-		FRotator EyeViewPointRotation;
-		DemoCharacter->GetActorEyesViewPoint(EyeViewPointLocation, EyeViewPointRotation);
+	Super::StartHandlingBeamForActor(Actor);
 
-		const FVector TraceStart = EyeViewPointLocation;
-		const FVector TraceEnd = TraceStart + EyeViewPointRotation.Vector() * MaxVisionDistance;
+	if (Actor == nullptr) return;
+	IHealthComponentProvider* HealthComponentProvider = Cast<IHealthComponentProvider>(Actor);
 
-		FHitResult Hit;
-		UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(), TraceStart, TraceEnd, SphereTraceRadius, TraceObjectTypes, false, ActorsToIngoreDuringTrace, TraceDrawDebugType, Hit, true,
-		                                                  TraceColor, TraceHitColor, TraceDrawTime);
-		OnHitUpdated(Hit);
+	if (!HealthComponentProvider) return;
 
-		if (Hit.bBlockingHit)
-		{
-			AActor* HitActor = Hit.GetActor();
-			if (HitActor != TracedActor)
-			{
-				TracedActor = HitActor;
-				IHealthComponentProvider* OldHealthComponentProvider = HealthComponentProvider;
-				if (HitActor->Implements<UHealthComponentProvider>())
-				{
-					HealthComponentProvider = Cast<IHealthComponentProvider>(HitActor);
-				}
-				else
-				{
-					HealthComponentProvider = nullptr;
-				}
-				SwitchDealingDamage(OldHealthComponentProvider);
-			}
-		}
-		else
-		{
-			TracedActor = nullptr;
-			HealthComponentProvider = nullptr;
-		}
-	}
+	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();
+	HealthComponent->StartUsing(DamageOverTime);
+}
+
+void UMageBeamAction::StopHandlingBeamForActor(AActor* Actor)
+{
+	Super::StopHandlingBeamForActor(Actor);
+
+	if (Actor == nullptr) return;
+	IHealthComponentProvider* HealthComponentProvider = Cast<IHealthComponentProvider>(Actor);
+
+	if (!HealthComponentProvider) return;
+
+	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();
+	HealthComponent->StopUsing(DamageOverTime);
+}
+
+void UMageBeamAction::UpdateHandlingBeamForActor(AActor* Actor)
+{
+	Super::UpdateHandlingBeamForActor(Actor);
 }
 
 void UMageBeamAction::AnimNotifyEventReceiveHandler(const FAnimNotifyEvent& AnimNotifyEvent)
 {
 	if (AnimNotifyEvent.NotifyName == ReadyToCastAnimNotifyName)
 	{
-		bIsReadyToCast = true;
+		bCanBeam = true;
 		// Calling on next tick to ensure references are updated
-		GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UMageBeamAction::StartDealingDamage);
+		GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UMageBeamAction::OnCastStarted);
 	}
 	if (AnimNotifyEvent.NotifyName == FinishedCastingAnimNotifyName)
 	{
-		bIsReadyToCast = false;
-		// Calling on next tick to ensure references are updated
-		GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UMageBeamAction::StopDealingDamage);
+		Super::StopActionImplementation_Implementation();
+		GetWorld()->GetTimerManager().SetTimerForNextTick(this, &UMageBeamAction::OnCastEnded);
 	}
-}
-
-void UMageBeamAction::StartDealingDamage()
-{
-	OnCastStarted();
-
-	if (!HealthComponentProvider) return;
-
-	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();
-	if (!ensure(HealthComponent)) return;
-
-	HealthComponent->StartUsing(DamageOverTime);
-}
-
-void UMageBeamAction::StopDealingDamage()
-{
-	OnCastEnded();
-
-	if (!HealthComponentProvider) return;
-
-	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();
-	if (!ensure(HealthComponent)) return;
-
-	HealthComponent->StopUsing(DamageOverTime);
-}
-
-void UMageBeamAction::SwitchDealingDamage(IHealthComponentProvider* OldHealthComponentProvider)
-{
-	if (OldHealthComponentProvider != nullptr)
-	{
-		UAttributeComponent* OldHealthComponent = OldHealthComponentProvider->GetHealthComponent();
-		if (!ensure(OldHealthComponent)) return;
-		OldHealthComponent->StopUsing(DamageOverTime);
-	}
-
-	if (!HealthComponentProvider) return;
-
-	UAttributeComponent* NewHealthComponent = HealthComponentProvider->GetHealthComponent();
-	if (!ensure(NewHealthComponent)) return;
-
-	NewHealthComponent->StartUsing(DamageOverTime);
 }

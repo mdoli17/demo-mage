@@ -17,6 +17,7 @@ void UBeamAction::Tick(float DeltaTime)
 	UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(), TraceStart, TraceEnd, SphereTraceRadius, TraceObjectTypes, false, ActorsToIngoreDuringTrace, TraceDrawDebugType, Hit, true,
 	                                                  TraceColor, TraceHitColor, TraceDrawTime);
 
+	OnHitUpdated(Hit);
 	if (!Hit.bBlockingHit)
 	{
 		if (TracedActor)
@@ -24,6 +25,7 @@ void UBeamAction::Tick(float DeltaTime)
 			if (TracedActor->Implements<UBeamable>())
 			{
 				IBeamable::Execute_StopHandlingBeam(TracedActor);
+				StopHandlingBeamForActor(TracedActor);
 				TracedActor = nullptr;
 			}
 		}
@@ -40,6 +42,7 @@ void UBeamAction::Tick(float DeltaTime)
 			if (TracedActor->Implements<UBeamable>())
 			{
 				IBeamable::Execute_StopHandlingBeam(TracedActor);
+				StopHandlingBeamForActor(TracedActor);
 			}
 		}
 
@@ -47,6 +50,7 @@ void UBeamAction::Tick(float DeltaTime)
 		if (TracedActor->Implements<UBeamable>())
 		{
 			IBeamable::Execute_StartHandlingBeam(TracedActor, Hit);
+			StartHandlingBeamForActor(TracedActor);
 		}
 	}
 	else
@@ -54,6 +58,7 @@ void UBeamAction::Tick(float DeltaTime)
 		if (TracedActor->Implements<UBeamable>())
 		{
 			IBeamable::Execute_UpdateHandlingBeam(TracedActor, Hit);
+			UpdateHandlingBeamForActor(TracedActor);
 		}
 	}
 }
@@ -82,6 +87,7 @@ bool UBeamAction::StopActionImplementation_Implementation()
 		if (TracedActor->Implements<UBeamable>())
 		{
 			IBeamable::Execute_StopHandlingBeam(TracedActor);
+			StopHandlingBeamForActor(TracedActor);
 			TracedActor = nullptr;
 		}
 	}

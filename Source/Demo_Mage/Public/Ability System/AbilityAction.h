@@ -76,7 +76,7 @@ protected:
 	AActor* Owner;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Action", meta=(AllowPrivateAccess))
-	ADemoCharacter* DemoCharacter;
+	ADemoCharacter* DemoCharacter; // TODO: Abilities can be used other then characters, this is not correct to be here.
 
 	bool bIsRunning;
 };

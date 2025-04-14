@@ -4,14 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "DemoAbilityAction.h"
-#include "Kismet/KismetSystemLibrary.h"
+#include "Ability System/BeamAction.h"
 #include "MageBeamAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_MAGE_API UMageBeamAction : public UDemoAbilityAction, public FTickableGameObject
+class DEMO_MAGE_API UMageBeamAction : public UBeamAction
 {
 	GENERATED_BODY()
 
@@ -20,40 +20,21 @@ public:
 	virtual bool StartActionImplementation_Implementation(const FActionParams& Params) override;
 	virtual bool StopActionImplementation_Implementation() override;
 
-	virtual void Tick(float DeltaTime) override;
-
-	virtual ETickableTickType GetTickableTickType() const override
-	{
-		return ETickableTickType::Always;
-	}
-
-	virtual TStatId GetStatId() const override
-	{
-		RETURN_QUICK_DECLARE_CYCLE_STAT(FBeamAction, STATGROUP_Tickables);
-	}
-
-	virtual bool IsTickableWhenPaused() const override
-	{
-		return false;
-	}
-
-	virtual bool IsTickableInEditor() const override
-	{
-		return false;
-	}
-
 protected:
+	virtual UDemoAbilityComponent* GetOwningComponent() const override
+	{
+		return Cast<UDemoAbilityComponent>(GetOuter());
+	}
+
+	virtual void StartHandlingBeamForActor(AActor* Actor) override;
+	virtual void StopHandlingBeamForActor(AActor* Actor) override;
+	virtual void UpdateHandlingBeamForActor(AActor* Actor) override;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
 	float DamageOverTime;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
 	float MaxVisionDistance;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
-	float SphereTraceRadius;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
-	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
 	FName ReadyToCastAnimNotifyName;
@@ -67,38 +48,9 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category="Mage Beam")
 	void OnCastEnded();
 
-	UFUNCTION(BlueprintImplementableEvent, Category="Mage Beam")
-	void OnHitUpdated(const FHitResult& Hit);
+	IDemoCharacterToAnimInterface* AnimInterface;
 
 private:
-	TArray<AActor*> ActorsToIngoreDuringTrace;
-
-	UPROPERTY()
-	AActor* TracedActor;
-
-	IHealthComponentProvider* HealthComponentProvider;
-
-	uint32 LastFrameNumberTicked = -1;
-	bool bIsReadyToCast = false;
-
 	UFUNCTION()
 	void AnimNotifyEventReceiveHandler(const FAnimNotifyEvent& AnimNotifyEvent);
-
-	void StartDealingDamage();
-	void StopDealingDamage();
-	void SwitchDealingDamage(IHealthComponentProvider* OldHealthComponentProvider);
-
-protected:
-	// ----------------- DEBUG ---------------- //
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Beam/Debug")
-	TEnumAsByte<EDrawDebugTrace::Type> TraceDrawDebugType = EDrawDebugTrace::Type::None;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Beam/Debug")
-	FLinearColor TraceColor = FLinearColor::White;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Beam/Debug")
-	FLinearColor TraceHitColor = FLinearColor::Green;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Beam/Debug")
-	float TraceDrawTime = 1.5f;
 };

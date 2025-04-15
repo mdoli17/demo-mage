@@ -35,7 +35,7 @@ public:
 	{
 		return CameraComponent->GetComponentLocation();
 	}
-	
+
 	virtual USkeletalMeshComponent* GetSkeletalMesh() const override
 	{
 		return SkeletalMeshComponent;
@@ -59,6 +59,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputAction> JumpAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
+	TSoftObjectPtr<UInputAction> DashAction;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputAction> CameraMovementAction;
@@ -88,6 +91,9 @@ protected:
 
 	UFUNCTION()
 	void JumpInputCallback(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void DashInputCallback(const FInputActionValue& Value);
 
 	UFUNCTION()
 	void CameraMovementInputCallback(const FInputActionValue& Value);

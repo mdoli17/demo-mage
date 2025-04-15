@@ -53,6 +53,7 @@ void AMageCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	EnhancedInputComponent->BindAction(MoveAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::MoveInputCallback);
 	EnhancedInputComponent->BindAction(SprintAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::SprintInputCallback);
 	EnhancedInputComponent->BindAction(JumpAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::JumpInputCallback);
+	EnhancedInputComponent->BindAction(DashAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::DashInputCallback);
 	EnhancedInputComponent->BindAction(CameraMovementAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::CameraMovementInputCallback);
 	EnhancedInputComponent->BindAction(BasicAttackAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::BasicAttackInputCallback);
 	EnhancedInputComponent->BindAction(SelectAbilityAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::SelectAbilityInputCallback);
@@ -83,6 +84,11 @@ void AMageCharacter::SprintInputCallback(const FInputActionValue& Value)
 void AMageCharacter::JumpInputCallback(const FInputActionValue& Value)
 {
 	Jump();
+}
+
+void AMageCharacter::DashInputCallback(const FInputActionValue& Value)
+{
+	AbilityComponent->ExecuteActionByName(TEXT("Dash"));
 }
 
 void AMageCharacter::CameraMovementInputCallback(const FInputActionValue& Value)

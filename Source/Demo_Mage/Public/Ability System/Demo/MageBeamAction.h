@@ -5,13 +5,14 @@
 #include "CoreMinimal.h"
 #include "DemoAbilityAction.h"
 #include "Ability System/BeamAction.h"
+#include "Ability System/HealthBeamAction.h"
 #include "MageBeamAction.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class DEMO_MAGE_API UMageBeamAction : public UBeamAction
+class DEMO_MAGE_API UMageBeamAction : public UHealthBeamAction
 {
 	GENERATED_BODY()
 
@@ -25,13 +26,6 @@ protected:
 	{
 		return Cast<UDemoAbilityComponent>(GetOuter());
 	}
-
-	virtual void StartHandlingBeamForActor(AActor* Actor) override;
-	virtual void StopHandlingBeamForActor(AActor* Actor) override;
-	virtual void UpdateHandlingBeamForActor(AActor* Actor) override;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
-	float DamageOverTime;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
 	float MaxVisionDistance;
@@ -47,6 +41,9 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category="Mage Beam")
 	void OnCastEnded();
+
+	UPROPERTY(BlueprintReadOnly, Category="Mage Beam")
+	ADemoCharacter* DemoCharacter;
 
 	IDemoCharacterToAnimInterface* AnimInterface;
 

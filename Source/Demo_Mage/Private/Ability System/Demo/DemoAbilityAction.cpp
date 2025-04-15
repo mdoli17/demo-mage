@@ -3,9 +3,15 @@
 
 #include "Ability System/Demo/DemoAbilityAction.h"
 
+void UDemoAbilityAction::Initialize(AActor* Instigator)
+{
+	DemoCharacter = Cast<ADemoCharacter>(Instigator);
+	AnimInterface = Cast<IDemoCharacterToAnimInterface>(DemoCharacter->GetSkeletalMesh()->GetAnimInstance());
+	Super::Initialize(Instigator);
+}
+
 void UDemoAbilityAction::Initialize_Implementation()
 {
-	AnimInterface = Cast<IDemoCharacterToAnimInterface>(DemoCharacter->GetSkeletalMesh()->GetAnimInstance());
 	ensure(AnimInterface);
 	Super::Initialize_Implementation();
 }

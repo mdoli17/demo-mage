@@ -7,7 +7,6 @@
 void UAbilityAction::Initialize(AActor* Instigator)
 {
 	Owner = Instigator;
-	DemoCharacter = Cast<ADemoCharacter>(Instigator);
 	Initialize();
 }
 

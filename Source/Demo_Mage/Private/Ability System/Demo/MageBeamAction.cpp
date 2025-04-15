@@ -7,13 +7,13 @@ void UMageBeamAction::Initialize_Implementation()
 {
 	Super::Initialize_Implementation();
 
+	DemoCharacter = Cast<ADemoCharacter>(Owner);
+	ensure(DemoCharacter);
 	AnimInterface = Cast<IDemoCharacterToAnimInterface>(DemoCharacter->GetSkeletalMesh()->GetAnimInstance());
 	ensure(AnimInterface);
-	Super::Initialize_Implementation();
 
 	AnimInterface->GetAnimNotifyEventReceived().AddDynamic(this, &UMageBeamAction::AnimNotifyEventReceiveHandler);
 }
-
 
 bool UMageBeamAction::StartActionImplementation_Implementation(const FActionParams& Params)
 {
@@ -25,37 +25,6 @@ bool UMageBeamAction::StopActionImplementation_Implementation()
 {
 	AnimInterface->StopAbility(true);
 	return true;
-}
-
-void UMageBeamAction::StartHandlingBeamForActor(AActor* Actor)
-{
-	Super::StartHandlingBeamForActor(Actor);
-
-	if (Actor == nullptr) return;
-	IHealthComponentProvider* HealthComponentProvider = Cast<IHealthComponentProvider>(Actor);
-
-	if (!HealthComponentProvider) return;
-
-	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();
-	HealthComponent->StartUsing(DamageOverTime);
-}
-
-void UMageBeamAction::StopHandlingBeamForActor(AActor* Actor)
-{
-	Super::StopHandlingBeamForActor(Actor);
-
-	if (Actor == nullptr) return;
-	IHealthComponentProvider* HealthComponentProvider = Cast<IHealthComponentProvider>(Actor);
-
-	if (!HealthComponentProvider) return;
-
-	UAttributeComponent* HealthComponent = HealthComponentProvider->GetHealthComponent();
-	HealthComponent->StopUsing(DamageOverTime);
-}
-
-void UMageBeamAction::UpdateHandlingBeamForActor(AActor* Actor)
-{
-	Super::UpdateHandlingBeamForActor(Actor);
 }
 
 void UMageBeamAction::AnimNotifyEventReceiveHandler(const FAnimNotifyEvent& AnimNotifyEvent)

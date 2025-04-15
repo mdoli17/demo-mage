@@ -4,6 +4,7 @@
 #include "Ability System/BeamAction.h"
 
 #include "Ability System/Beam/Beamable.h"
+#include "Ability System/Beam/BeamCaster.h"
 #include "Kismet/KismetSystemLibrary.h"
 
 void UBeamAction::Tick(float DeltaTime)
@@ -25,9 +26,9 @@ void UBeamAction::Tick(float DeltaTime)
 			if (TracedActor->Implements<UBeamable>())
 			{
 				IBeamable::Execute_StopHandlingBeam(TracedActor);
-				StopHandlingBeamForActor(TracedActor);
-				TracedActor = nullptr;
 			}
+			StopHandlingBeamForActor(TracedActor);
+			TracedActor = nullptr;
 		}
 		return;
 	}
@@ -42,24 +43,24 @@ void UBeamAction::Tick(float DeltaTime)
 			if (TracedActor->Implements<UBeamable>())
 			{
 				IBeamable::Execute_StopHandlingBeam(TracedActor);
-				StopHandlingBeamForActor(TracedActor);
 			}
+			StopHandlingBeamForActor(TracedActor);
 		}
 
 		TracedActor = HitActor;
 		if (TracedActor->Implements<UBeamable>())
 		{
 			IBeamable::Execute_StartHandlingBeam(TracedActor, Hit);
-			StartHandlingBeamForActor(TracedActor);
 		}
+		StartHandlingBeamForActor(TracedActor);
 	}
 	else
 	{
 		if (TracedActor->Implements<UBeamable>())
 		{
 			IBeamable::Execute_UpdateHandlingBeam(TracedActor, Hit);
-			UpdateHandlingBeamForActor(TracedActor);
 		}
+		UpdateHandlingBeamForActor(TracedActor);
 	}
 }
 
@@ -87,9 +88,9 @@ bool UBeamAction::StopActionImplementation_Implementation()
 		if (TracedActor->Implements<UBeamable>())
 		{
 			IBeamable::Execute_StopHandlingBeam(TracedActor);
-			StopHandlingBeamForActor(TracedActor);
-			TracedActor = nullptr;
 		}
+		StopHandlingBeamForActor(TracedActor);
+		TracedActor = nullptr;
 	}
 
 	return true;

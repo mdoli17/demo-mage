@@ -23,7 +23,7 @@ public:
 	bool CanStartAction();
 
 	UFUNCTION(BlueprintCallable, Category="Action")
-	virtual bool StartAction(const FActionParams& Params); // TODO: This shouldn't be virtual, It contains necessary behaviour which should be executed when starting. 
+	bool StartAction(const FActionParams& Params);
 
 	UFUNCTION(BlueprintCallable, Category="Action")
 	bool StopAction();
@@ -49,7 +49,6 @@ public:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Action")
 	FGameplayTagContainer BlockingTags;
 
-
 	UFUNCTION(BlueprintCallable, Category="Action")
 	virtual UWorld* GetWorld() const override;
 
@@ -74,9 +73,6 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Action", meta=(AllowPrivateAccess))
 	AActor* Owner;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category="Action", meta=(AllowPrivateAccess))
-	ADemoCharacter* DemoCharacter; // TODO: Abilities can be used other then characters, this is not correct to be here.
 
 	bool bIsRunning;
 };

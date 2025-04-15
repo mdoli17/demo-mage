@@ -4,7 +4,6 @@
 
 #include "CoreMinimal.h"
 #include "AbilityAction.h"
-#include "Beam/BeamCaster.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "BeamAction.generated.h"
 

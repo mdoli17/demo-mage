@@ -22,12 +22,12 @@ class DEMO_MAGE_API IBeamable
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
-	UFUNCTION(BlueprintNativeEvent, Category="Beam")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Beam")
 	void StartHandlingBeam(const FHitResult& HitResult);
 
-	UFUNCTION(BlueprintNativeEvent, Category="Beam")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Beam")
 	void UpdateHandlingBeam(const FHitResult& HitResult);
 
-	UFUNCTION(BlueprintNativeEvent, Category="Beam")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Beam")
 	void StopHandlingBeam();
 };

@@ -27,6 +27,24 @@ bool UMageBeamAction::StopActionImplementation_Implementation()
 	return true;
 }
 
+FVector UMageBeamAction::GetTraceStart_Implementation()
+{
+	FVector EyeLocation;
+	FRotator EyeRotation;
+	DemoCharacter->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+
+	return EyeLocation;
+}
+
+FVector UMageBeamAction::GetTraceEnd_Implementation()
+{
+	FVector EyeLocation;
+	FRotator EyeRotation;
+	DemoCharacter->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+
+	return EyeLocation + EyeRotation.Vector() * MaxVisionDistance;
+}
+
 void UMageBeamAction::AnimNotifyEventReceiveHandler(const FAnimNotifyEvent& AnimNotifyEvent)
 {
 	if (AnimNotifyEvent.NotifyName == ReadyToCastAnimNotifyName)

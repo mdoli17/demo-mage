@@ -72,9 +72,6 @@ protected:
 
 	bool bCanBeam;
 
-	UPROPERTY(BlueprintReadOnly, Category="Beam")
-	AActor* Caster;
-
 	// ----------------- DEBUG ---------------- //
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debug")
 	TEnumAsByte<EDrawDebugTrace::Type> TraceDrawDebugType = EDrawDebugTrace::Type::None;

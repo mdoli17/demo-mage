@@ -27,6 +27,9 @@ protected:
 		return Cast<UDemoAbilityComponent>(GetOuter());
 	}
 
+	virtual FVector GetTraceStart_Implementation() override;
+	virtual FVector GetTraceEnd_Implementation() override;
+
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Beam")
 	float MaxVisionDistance;
 

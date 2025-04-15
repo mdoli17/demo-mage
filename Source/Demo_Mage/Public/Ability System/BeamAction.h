@@ -59,10 +59,10 @@ protected:
 	UFUNCTION(BlueprintImplementableEvent, Category="Beam")
 	void OnHitUpdated(const FHitResult& Hit);
 
-	UFUNCTION(BlueprintNativeEvent, Category="Beam")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Beam")
 	FVector GetTraceStart();
 
-	UFUNCTION(BlueprintNativeEvent, Category="Beam")
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable, Category="Beam")
 	FVector GetTraceEnd();
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Beam")
@@ -72,6 +72,9 @@ protected:
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
 
 	bool bCanBeam;
+
+	UPROPERTY(BlueprintReadOnly, Category="Beam")
+	AActor* Caster;
 
 	// ----------------- DEBUG ---------------- //
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debug")
@@ -90,5 +93,4 @@ private:
 	TArray<AActor*> ActorsToIngoreDuringTrace;
 
 	AActor* TracedActor;
-	AActor* Caster;
 };

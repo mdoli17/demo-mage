@@ -55,6 +55,7 @@ void AMageCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCompo
 	EnhancedInputComponent->BindAction(JumpAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::JumpInputCallback);
 	EnhancedInputComponent->BindAction(DashAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::DashInputCallback);
 	EnhancedInputComponent->BindAction(CameraMovementAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::CameraMovementInputCallback);
+	EnhancedInputComponent->BindAction(InteractAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::InteractionInputCallback);
 	EnhancedInputComponent->BindAction(BasicAttackAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::BasicAttackInputCallback);
 	EnhancedInputComponent->BindAction(SelectAbilityAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::SelectAbilityInputCallback);
 	EnhancedInputComponent->BindAction(AbilityAction.LoadSynchronous(), ETriggerEvent::Triggered, this, &AMageCharacter::AbilityActionInputCallback);
@@ -103,6 +104,11 @@ void AMageCharacter::CameraMovementInputCallback(const FInputActionValue& Value)
 
 	if (CameraValue.X != 0)
 		PlayerController->AddYawInput(CameraValue.X);
+}
+
+void AMageCharacter::InteractionInputCallback(const FInputActionValue& Value)
+{
+	AbilityComponent->ExecuteActionByName(TEXT("Interact"));
 }
 
 void AMageCharacter::BasicAttackInputCallback(const FInputActionValue& Value)

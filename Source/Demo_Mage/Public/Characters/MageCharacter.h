@@ -67,6 +67,9 @@ protected:
 	TSoftObjectPtr<UInputAction> CameraMovementAction;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
+	TSoftObjectPtr<UInputAction> InteractAction;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputAction> BasicAttackAction;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
@@ -74,7 +77,6 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Input")
 	TSoftObjectPtr<UInputAction> AbilityAction;
-
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Demo Character")
 	TObjectPtr<UCameraComponent> CameraComponent;
@@ -97,6 +99,9 @@ protected:
 
 	UFUNCTION()
 	void CameraMovementInputCallback(const FInputActionValue& Value);
+
+	UFUNCTION()
+	void InteractionInputCallback(const FInputActionValue& Value);
 
 	UFUNCTION()
 	void BasicAttackInputCallback(const FInputActionValue& Value);

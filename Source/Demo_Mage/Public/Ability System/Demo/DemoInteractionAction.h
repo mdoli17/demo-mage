@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "DemoAbilityAction.h"
-#include "Kismet/KismetSystemLibrary.h"
+#include "Tools/Tracing/TraceData.h"
 #include "DemoInteractionAction.generated.h"
 
 /**
@@ -20,23 +20,7 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Interaction")
-	float InteractionDistance;
-
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Interaction")
-	TEnumAsByte<ETraceTypeQuery> TraceChannel;
-
-	// ----------------- DEBUG ---------------- //
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debug")
-	TEnumAsByte<EDrawDebugTrace::Type> TraceDrawDebugType = EDrawDebugTrace::Type::None;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debug")
-	FLinearColor TraceColor = FLinearColor::White;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debug")
-	FLinearColor TraceHitColor = FLinearColor::Green;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Debug")
-	float TraceDrawTime = 1.5f;
+	FTraceData TraceData;
 
 private:
 	TArray<AActor*> ActorsToIgnore;

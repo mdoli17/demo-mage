@@ -13,9 +13,17 @@ bool UDemoInteractionAction::ExecuteActionImplementation_Implementation(const FA
 	DemoCharacter->GetActorEyesViewPoint(EyeLocation, EyeRotator);
 
 	const FVector TraceStart = EyeLocation;
-	const FVector TraceEnd = EyeLocation + EyeRotator.Vector() * InteractionDistance;
+	const FVector TraceEnd = EyeLocation + EyeRotator.Vector() * TraceData.TraceLength;
 	FHitResult Hit;
-	UKismetSystemLibrary::LineTraceSingle(GetWorld(), TraceStart, TraceEnd, TraceChannel, false, ActorsToIgnore, TraceDrawDebugType, Hit, true, TraceColor, TraceHitColor, TraceDrawTime);
+	UKismetSystemLibrary::LineTraceSingle(GetWorld(), TraceStart, TraceEnd, TraceData.TraceChannel,
+	                                      TraceData.bTraceComplex,
+	                                      ActorsToIgnore,
+	                                      TraceData.TraceDrawDebugType,
+	                                      Hit,
+	                                      TraceData.bIgnoreSelf,
+	                                      TraceData.TraceColor,
+	                                      TraceData.TraceHitColor,
+	                                      TraceData.TraceDrawTime);
 
 	if (!Hit.bBlockingHit) return false;
 

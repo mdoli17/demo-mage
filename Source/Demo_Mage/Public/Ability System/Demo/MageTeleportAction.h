@@ -31,7 +31,7 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
-
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	FName AnimNotifyName;
 

@@ -89,9 +89,10 @@ void UMageTeleportAction::SphereTrace(FHitResult& Hit) const
 	FRotator EyesViewPointRotation;
 	DemoCharacter->GetActorEyesViewPoint(EyesViewPointLocation, EyesViewPointRotation);
 
-	const FVector SphereStart = EyesViewPointLocation;
-	const FVector SphereEnd = EyesViewPointLocation + EyesViewPointRotation.Vector() * MaxVisionDistance;
+	const FVector TraceStart = EyesViewPointLocation;
+	const FVector TraceEnd = EyesViewPointLocation + EyesViewPointRotation.Vector() * TraceData.TraceLength;
 
-	UKismetSystemLibrary::SphereTraceSingleForObjects(GetWorld(), SphereStart, SphereEnd, SphereTraceRadius, TraceObjectTypes, false, ActorsToIgnoreDuringTrace, TraceDrawDebugType, Hit, true,
-	                                                  TraceColor, TraceHitColor, TraceDrawTime);
+	UKismetSystemLibrary::SphereTraceSingle(GetWorld(), TraceStart, TraceEnd, SphereTraceRadius, TraceData.TraceChannel, TraceData.bTraceComplex, ActorsToIgnoreDuringTrace,
+	                                        TraceData.TraceDrawDebugType, Hit, TraceData.bIgnoreSelf,
+	                                        TraceData.TraceColor, TraceData.TraceHitColor, TraceData.TraceDrawTime);
 }

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "DemoAbilityAction.h"
 #include "Kismet/KismetSystemLibrary.h"
+#include "Tools/Tracing/TraceData.h"
 #include "MageTeleportAction.generated.h"
 
 /**
@@ -24,14 +25,11 @@ public:
 
 protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
-	float MaxVisionDistance = 1000.f;
+	FTraceData TraceData;
 
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	float SphereTraceRadius = 250.f;
 
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
-	TArray<TEnumAsByte<EObjectTypeQuery>> TraceObjectTypes;
-	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category="Mage Teleport")
 	FName AnimNotifyName;
 
@@ -63,18 +61,4 @@ private:
 		InitialTarget = nullptr;
 		FinalTarget = nullptr;
 	}
-
-protected:
-	// ----------------- DEBUG ---------------- //
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	TEnumAsByte<EDrawDebugTrace::Type> TraceDrawDebugType = EDrawDebugTrace::Type::None;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	FLinearColor TraceColor = FLinearColor::White;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	FLinearColor TraceHitColor = FLinearColor::Green;
-
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Mage Teleport/Debug")
-	float TraceDrawTime = 1.5f;
 };

@@ -33,7 +33,7 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RespawnCharacter();
 
-	UPROPERTY(BlueprintReadOnly)
+	UPROPERTY(BlueprintAssignable)
 	FOnCharacterNeutralized OnCharacterNeutralized;
 
 	UFUNCTION(BlueprintCallable, Category="Spawn Point")

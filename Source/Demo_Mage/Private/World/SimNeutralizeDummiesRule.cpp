@@ -35,6 +35,5 @@ void ASimNeutralizeDummiesRule::EnemyNeutralizeHandler()
 		if (SpawnPoint->IsCharacterAlive()) return;
 	}
 
-	UE_LOG(LogTemp, Log, TEXT("Rule Satisfied"));
-	OnRuleSatisfied.Broadcast();
+	SatisfyRule();
 }

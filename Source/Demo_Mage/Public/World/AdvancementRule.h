@@ -21,10 +21,22 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	void SatisfyRule()
+	{
+		bIsCompleted = true;
+		OnRuleSatisfied.Broadcast();
+	}
+
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(BlueprintReadOnly, Category="Rules")
+	UFUNCTION(BlueprintCallable, Category="Rules")
+	bool IsCompleted() const { return bIsCompleted; }
+
+	UPROPERTY(BlueprintAssignable, Category="Rules")
 	FOnRuleSatisfied OnRuleSatisfied;
+
+private:
+	bool bIsCompleted;
 };

@@ -35,9 +35,13 @@ void AEnemySpawnPoint::RespawnCharacter()
 
 		CharacterInstance->OnDeathDelegate.AddDynamic(this, &AEnemySpawnPoint::CharacterDeathHandler);
 	}
+
+	bIsAlive = true;
 }
 
 void AEnemySpawnPoint::CharacterDeathHandler()
 {
+	bIsAlive = false;
+	OnCharacterNeutralized.Broadcast();
 	GetWorld()->GetTimerManager().SetTimer(DeathTimerHandle, this, &AEnemySpawnPoint::RespawnCharacter, RespawnDelay, false);
 }

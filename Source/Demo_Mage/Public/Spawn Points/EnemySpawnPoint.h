@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "EnemySpawnPoint.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnCharacterNeutralized);
+
 class AEnemyCharacter;
 
 UCLASS()
@@ -31,6 +33,15 @@ public:
 	UFUNCTION(BlueprintCallable)
 	void RespawnCharacter();
 
+	UPROPERTY(BlueprintReadOnly)
+	FOnCharacterNeutralized OnCharacterNeutralized;
+
+	UFUNCTION(BlueprintCallable, Category="Spawn Point")
+	bool IsCharacterAlive() const
+	{
+		return bIsAlive;
+	}
+
 protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category="Spawn Point")
 	float RespawnDelay;
@@ -42,4 +53,6 @@ protected:
 
 private:
 	FTimerHandle DeathTimerHandle;
+
+	bool bIsAlive;
 };
